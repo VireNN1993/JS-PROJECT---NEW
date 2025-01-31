@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>בונה מסכים</title>
+    <link rel="stylesheet" href="screen.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>בונה מסכים</h1>
+
+      <label for="type">סוג אלמנט:</label>
+      <select id="type">
+        <option value="div">div</option>
+        <option value="p">p</option>
+        <option value="span">span</option>
+        <option value="h1">h1</option>
+        <option value="h2">h2</option>
+      </select>
+
+      <label for="width">רוחב (px):</label>
+      <input type="number" id="width" placeholder="לדוגמה: 100" />
+
+      <label for="height">גובה (px):</label>
+      <input type="number" id="height" placeholder="לדוגמה: 100" />
+
+      <label for="color">צבע רקע:</label>
+      <input type="text" id="color" placeholder="לדוגמה: red" />
+
+      <label for="content">תוכן:</label>
+      <input type="text" id="content" placeholder="לדוגמה: טקסט" />
+
+      <label for="border">עובי מסגרת (px):</label>
+      <input type="number" id="border" placeholder="לדוגמה: 2" />
+
+      <label for="border-color">צבע מסגרת:</label>
+      <input type="text" id="border-color" placeholder="לדוגמה: black" />
+
+      <label for="border-radius">רדיוס מסגרת (px):</label>
+      <input type="number" id="border-radius" placeholder="לדוגמה: 10" />
+
+      <label for="margin">שוליים (px):</label>
+      <input type="number" id="margin" placeholder="לדוגמה: 10" />
+
+      <label for="title">Title:</label>
+      <input type="text" id="title" placeholder="כותרת" />
+
+      <label for="id">ID:</label>
+      <input type="text" id="id" placeholder="ID ייחודי" />
+
+      <button id="add-btn">הוסף</button>
+      <button id="clear-btn">נקה הכל</button>
+    </div>
+    <div id="elements-container"></div>
+    <script src="screen.js"></script>
+  </body>
+</html>

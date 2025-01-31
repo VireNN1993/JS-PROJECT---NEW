@@ -1,0 +1,86 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f0f0f0;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 500px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+#word {
+  font-size: 24px;
+  letter-spacing: 10px;
+  margin-bottom: 20px;
+}
+
+#hint {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.hangman-img {
+  width: 200px;
+  height: auto;
+  margin: 20px auto;
+  display: block;
+}
+
+#letters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.letter {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  margin: 5px;
+  padding: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.letter:hover {
+  background: #0056b3;
+}
+
+.letter:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+#message {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #218838;
+}

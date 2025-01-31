@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hangman Game</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Hangman Game</h1>
+      <p id="hint"><strong>Hint:</strong> ???</p>
+      <!-- רמז -->
+      <p id="word">_ _ _ _</p>
+      <!-- מילה נסתרת -->
+      <p id="message"></p>
+      <!-- הודעות למשתמש -->
+      <img
+        id="hangman-image"
+        src="img/hangman1.png"
+        alt="Hangman"
+        class="hangman-img"
+      />
+      <div id="letters"></div>
+      <!-- אותיות לניחוש -->
+      <p>Wrong guesses: <span id="wrong-guesses">0</span>/7</p>
+      <!-- טעויות -->
+      <button id="restart">Restart</button>
+      <!-- התחלה מחדש -->
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

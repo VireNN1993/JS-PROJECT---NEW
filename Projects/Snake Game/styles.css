@@ -1,0 +1,25 @@
+body {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background: #1e3c72; /* רקע כהה */
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 20px 0;
+}
+
+canvas {
+  border: 1px solid white;
+  display: block;
+  margin: 0 auto;
+  background-color: #2a5298;
+  border-radius: 10px;
+}
+
+p {
+  font-size: 20px;
+  margin-top: 10px;
+}

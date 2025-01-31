@@ -1,0 +1,9 @@
+.fa {
+  cursor: pointer;
+}
+.fa-heart.text-danger {
+  color: red;
+}
+.fa-heart.text-dark {
+  color: gray;
+}

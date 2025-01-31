@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Challenge - Terminal Style</title>
+    <link rel="stylesheet" href="math.css" />
+  </head>
+  <body>
+    <div class="terminal-container">
+      <div class="screen">
+        <h1 class="terminal-header">Math Terminal</h1>
+        <div class="game-area">
+          <div class="question-section">
+            <p class="question">
+              <span id="num1"></span>
+              <span id="current-operator"></span>
+              <span id="num2"></span>
+              =
+              <input type="text" id="answer" placeholder="Type answer here" />
+            </p>
+            <div class="controls">
+              <select id="operator">
+                <option value="+">Addition</option>
+                <option value="-">Subtraction</option>
+                <option value="*">Multiplication</option>
+                <option value="/">Division</option>
+              </select>
+              <select id="range">
+                <option value="10">1-10</option>
+                <option value="100">1-100</option>
+                <option value="1000">1-1000</option>
+              </select>
+            </div>
+            <button id="check">Submit</button>
+          </div>
+          <div id="timer-container">
+            <div id="timer-bar"></div>
+            <span id="timer-text">10 Seconds</span>
+          </div>
+        </div>
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Correct Answer</th>
+              <th>Your Answer</th>
+              <th>Question</th>
+            </tr>
+          </thead>
+          <tbody id="results"></tbody>
+        </table>
+      </div>
+    </div>
+    <script src="math.js"></script>
+  </body>
+</html>
