@@ -56,6 +56,14 @@ class PortfolioApp {
     }
   }
 }
+const isGithubPages = window.location.hostname.includes("github.io");
+const backgroundPath = isGithubPages
+  ? "/JS-PROJECT---NEW/Images/backGround.png"
+  : "Images/backGround.png";
+
+document.querySelector(
+  ".hero-section"
+).style.backgroundImage = `url('${backgroundPath}')`;
 
 // Initialize app
 document.addEventListener("DOMContentLoaded", () => {
