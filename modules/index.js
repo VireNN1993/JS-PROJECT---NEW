@@ -1,7 +1,8 @@
+// index.js
+import { Navigation } from "./navigation.js";
 import { ProjectManager } from "./projectManager.js";
 import { FormManager } from "./formManager.js";
 import { ScrollManager } from "./scrollManager.js";
-import { toggleDarkMode } from "./themeManager.js";
 import { ANIMATION_DEFAULTS } from "./constants.js";
 
 class PortfolioApp {
@@ -9,44 +10,43 @@ class PortfolioApp {
     this.projectManager = new ProjectManager();
     this.formManager = new FormManager();
     this.scrollManager = new ScrollManager();
+    this.navigation = new Navigation();
     this.initializeApp();
-    this.setupEventListeners();
   }
 
   initializeApp() {
-    gsap.registerPlugin(ScrollTrigger);
-    this.initHeroAnimations();
+    if (window.gsap) {
+      gsap.registerPlugin(ScrollTrigger);
+      this.initHeroAnimations();
+    }
     this.projectManager.renderProjects();
     this.formManager.setupContactForm();
     this.scrollManager.setupBackToTop();
     this.updateFooterYear();
   }
 
-  setupEventListeners() {
-    window.addEventListener("scroll", () => {
-      this.scrollManager.handleScroll(window.scrollY);
-    });
-
-    const modeToggle = document.getElementById("mode-toggle");
-    modeToggle.removeAttribute("onclick");
-    modeToggle.addEventListener("click", toggleDarkMode);
-  }
-
   initHeroAnimations() {
-    const timeline = gsap.timeline({ defaults: ANIMATION_DEFAULTS });
+    const elements = {
+      title: document.getElementById("hero-title"),
+      subtitle: document.getElementById("hero-subtitle"),
+      button: document.getElementById("hero-button"),
+    };
 
-    timeline
-      .fromTo(
-        "#hero-title",
-        { opacity: 0, y: -50 },
-        { opacity: 1, y: 0, duration: 1 }
-      )
-      .fromTo(
-        "#hero-subtitle",
-        { opacity: 0, y: -30 },
-        { opacity: 1, y: 0, duration: 0.8 }
-      )
-      .fromTo("#hero-button", { opacity: 0 }, { opacity: 1, duration: 0.5 });
+    if (elements.title && elements.subtitle && elements.button) {
+      const timeline = gsap.timeline({ defaults: ANIMATION_DEFAULTS });
+      timeline
+        .fromTo(
+          elements.title,
+          { opacity: 0, y: -50 },
+          { opacity: 1, y: 0, duration: 1 }
+        )
+        .fromTo(
+          elements.subtitle,
+          { opacity: 0, y: -30 },
+          { opacity: 1, y: 0, duration: 0.8 }
+        )
+        .fromTo(elements.button, { opacity: 0 }, { opacity: 1, duration: 0.5 });
+    }
   }
 
   updateFooterYear() {
