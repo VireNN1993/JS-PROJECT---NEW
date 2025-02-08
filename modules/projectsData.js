@@ -45,7 +45,7 @@ export const projects = [
     image: "Images/screen Img.png",
     description:
       "Visual tool for creating screen layouts with drag-and-drop functionality. Design responsive layouts easily.",
-    link: "Projects/screen-builder/index.html",
+    link: "Projects/screen-builder/screen.html",
     tags: ["UI", "Design", "Tool"],
     technologies: ["HTML5", "CSS3", "JavaScript"],
   },

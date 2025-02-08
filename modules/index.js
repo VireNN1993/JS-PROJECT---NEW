@@ -1,13 +1,44 @@
-// Main Application Entry Point
+/**
+ * index.js - Main Application Entry Point
+ * Full Stack Portfolio Project
+ * Author: Natan Blochin
+ *
+ * This module initializes and coordinates all core application features:
+ * - Navigation system
+ * - Project gallery management
+ * - Contact form handling
+ * - Scroll behavior
+ * - Theme management
+ * - GSAP animations
+ */
+
+// Import core modules
+import { Navigation } from "./navigation.js";
+import { ProjectManager } from "./projectManager.js";
+import { FormManager } from "./formManager.js";
+import { ScrollManager } from "./scrollManager.js";
+
+// Main initialization function
 document.addEventListener("DOMContentLoaded", () => {
-  // Navigation
+  initializeCore();
+  setupBackgroundImage();
+  initializeAnimations();
+  updateFooterYear();
+});
+
+/**
+ * Initialize core application features
+ * Each feature is wrapped in error handling to prevent cascading failures
+ */
+function initializeCore() {
+  // Initialize Navigation
   try {
     const navigation = new Navigation();
   } catch (error) {
     console.error("Navigation initialization error:", error);
   }
 
-  // Project Manager
+  // Initialize Project Manager
   try {
     const projectManager = new ProjectManager();
     projectManager.renderProjects();
@@ -15,28 +46,27 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Project Manager initialization error:", error);
   }
 
-  // Form Manager
+  // Initialize Form Manager
   try {
     const formManager = new FormManager();
   } catch (error) {
     console.error("Form Manager initialization error:", error);
   }
 
-  // Scroll Manager
+  // Initialize Scroll Manager
   try {
     const scrollManager = new ScrollManager();
     scrollManager.setupBackToTop();
   } catch (error) {
     console.error("Scroll Manager initialization error:", error);
   }
+}
 
-  // Update Footer Year
-  const yearElement = document.getElementById("year");
-  if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
-  }
-
-  // Setup Background Image
+/**
+ * Setup dynamic background image path based on environment
+ * Handles both local and GitHub Pages environments
+ */
+function setupBackgroundImage() {
   const isGithubPages = window.location.hostname.includes("github.io");
   const backgroundPath = isGithubPages
     ? "/JS-PROJECT---NEW/Images/backGround.png"
@@ -46,8 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (heroSection) {
     heroSection.style.backgroundImage = `url('${backgroundPath}')`;
   }
+}
 
-  // GSAP Animations (if GSAP is available)
+/**
+ * Initialize GSAP animations for hero section
+ * Creates smooth entrance animations for title, subtitle, and button
+ */
+function initializeAnimations() {
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -71,10 +106,14 @@ document.addEventListener("DOMContentLoaded", () => {
         .fromTo(heroButton, { opacity: 0 }, { opacity: 1, duration: 0.5 });
     }
   }
-});
+}
 
-// Import necessary modules
-import { Navigation } from "./navigation.js";
-import { ProjectManager } from "./projectManager.js";
-import { FormManager } from "./formManager.js";
-import { ScrollManager } from "./scrollManager.js";
+/**
+ * Update footer year to current year
+ */
+function updateFooterYear() {
+  const yearElement = document.getElementById("year");
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
+}

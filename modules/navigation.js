@@ -1,7 +1,28 @@
+/**
+ * navigation.js - Navigation System Manager
+ * Full Stack Portfolio Project
+ * Author: Natan Blochin
+ *
+ * Manages site navigation including:
+ * - Responsive navigation for desktop and mobile
+ * - Theme toggling functionality
+ * - Scroll behavior for navbar
+ * - Mobile menu animations
+ * Features:
+ * - Responsive design
+ * - Smooth transitions
+ * - Theme switching
+ * - Mobile-first approach
+ */
+
 import { toggleDarkMode } from "./themeManager.js";
 
 export class Navigation {
+  /**
+   * Initialize navigation system and bind DOM elements
+   */
   constructor() {
+    // Initialize DOM elements
     this.mobileNav = document.getElementById("mobile-nav");
     this.mobileMenuBtn = document.getElementById("mobile-menu-btn");
     this.desktopThemeBtn = document.getElementById("theme-toggle");
@@ -9,48 +30,60 @@ export class Navigation {
     this.navbar = document.getElementById("navbar");
     this.isMenuOpen = false;
 
-    this.initializeHamburgerColor();
+    // Setup navigation system
+    this.initializeHamburgerMenu();
     this.setupEventListeners();
     this.setupScrollBehavior();
   }
 
-  initializeHamburgerColor() {
+  /**
+   * Initialize hamburger menu icon and styles
+   */
+  initializeHamburgerMenu() {
     const hamburgerIcon = this.mobileMenuBtn?.querySelector("svg");
     if (hamburgerIcon) {
       const isDark = document.body.classList.contains("dark-mode");
-      this.setHamburgerStyle(isDark);
+      this.updateHamburgerStyle(isDark);
 
       hamburgerIcon.classList.add("w-6", "h-6", "block");
       this.mobileMenuBtn.classList.add("md:hidden", "p-2", "rounded-lg");
     }
   }
 
-  setHamburgerStyle(isDark) {
+  /**
+   * Update hamburger menu styles based on theme
+   * @param {boolean} isDark - Current theme state
+   */
+  updateHamburgerStyle(isDark) {
     const hamburgerIcon = this.mobileMenuBtn?.querySelector("svg");
     if (hamburgerIcon && this.mobileMenuBtn) {
-      // נקה את כל הסטיילים הקודמים
+      // Reset existing styles
       hamburgerIcon.style = "";
       this.mobileMenuBtn.style = "";
       this.mobileMenuBtn.className = "md:hidden p-2 rounded-lg";
 
-      // הגדר סטיילים חדשים
+      // Apply theme-specific styles
       hamburgerIcon.style.stroke = isDark ? "#FFFFFF" : "#1F2937";
       hamburgerIcon.style.strokeWidth = "2";
       hamburgerIcon.style.opacity = "1";
     }
   }
 
+  /**
+   * Setup all navigation event listeners
+   */
   setupEventListeners() {
+    // Mobile menu toggle
     if (this.mobileMenuBtn) {
-      this.mobileMenuBtn.addEventListener("click", () => {
-        this.toggleMobileMenu();
-      });
+      this.mobileMenuBtn.addEventListener("click", () =>
+        this.toggleMobileMenu()
+      );
     }
 
-    // Watch for theme changes
+    // Theme change observer
     const observer = new MutationObserver(() => {
       const isDark = document.body.classList.contains("dark-mode");
-      this.setHamburgerStyle(isDark);
+      this.updateHamburgerStyle(isDark);
     });
 
     observer.observe(document.body, {
@@ -58,25 +91,30 @@ export class Navigation {
       attributeFilter: ["class"],
     });
 
+    // Theme toggle buttons
     [this.desktopThemeBtn, this.mobileThemeBtn].forEach((btn) => {
-      if (btn)
+      if (btn) {
         btn.addEventListener("click", () => {
           toggleDarkMode();
           this.closeMobileMenu();
           const isDark = document.body.classList.contains("dark-mode");
-          this.setHamburgerStyle(isDark);
+          this.updateHamburgerStyle(isDark);
         });
+      }
     });
 
+    // Mobile navigation links
     if (this.mobileNav) {
       this.mobileNav.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-          this.closeMobileMenu();
-        });
+        link.addEventListener("click", () => this.closeMobileMenu());
       });
     }
   }
 
+  /**
+   * Setup navbar scroll behavior
+   * Adds blur effect and opacity changes on scroll
+   */
   setupScrollBehavior() {
     window.addEventListener("scroll", () => {
       if (this.navbar) {
@@ -87,6 +125,9 @@ export class Navigation {
     });
   }
 
+  /**
+   * Toggle mobile menu state with animation
+   */
   toggleMobileMenu() {
     this.isMenuOpen = !this.isMenuOpen;
     if (this.mobileNav) {
@@ -95,16 +136,19 @@ export class Navigation {
         : "translateY(100%)";
 
       const isDark = document.body.classList.contains("dark-mode");
-      this.setHamburgerStyle(isDark);
+      this.updateHamburgerStyle(isDark);
     }
   }
 
+  /**
+   * Close mobile menu and reset state
+   */
   closeMobileMenu() {
     this.isMenuOpen = false;
     if (this.mobileNav) {
       this.mobileNav.style.transform = "translateY(100%)";
       const isDark = document.body.classList.contains("dark-mode");
-      this.setHamburgerStyle(isDark);
+      this.updateHamburgerStyle(isDark);
     }
   }
 }
