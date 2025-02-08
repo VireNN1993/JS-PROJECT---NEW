@@ -9,24 +9,50 @@
   <body>
     <div class="container">
       <h1>Hangman Game</h1>
+
+      <!-- בחירת רמת קושי -->
+      <div id="difficulty">
+        <button onclick="setDifficulty('easy')">Easy</button>
+        <button onclick="setDifficulty('medium')">Medium</button>
+        <button onclick="setDifficulty('hard')">Hard</button>
+      </div>
+
+      <!-- הזנת מילה מותאמת אישית -->
+      <div id="custom-word">
+        <input type="text" id="custom-word-input" placeholder="Enter a word" />
+        <input type="text" id="custom-hint-input" placeholder="Enter a hint" />
+        <button onclick="setCustomWord()">Start Custom Game</button>
+      </div>
+
+      <!-- טיימר וניקוד -->
+      <p id="timer">Time Left: 60s</p>
+      <p id="score">Score: 0</p>
+
+      <!-- רמז ומילה נסתרת -->
       <p id="hint"><strong>Hint:</strong> ???</p>
-      <!-- רמז -->
       <p id="word">_ _ _ _</p>
-      <!-- מילה נסתרת -->
-      <p id="message"></p>
+
       <!-- הודעות למשתמש -->
+      <p id="message"></p>
+
+      <!-- תמונת Hangman -->
       <img
         id="hangman-image"
         src="img/hangman1.png"
         alt="Hangman"
         class="hangman-img"
       />
+
+      <!-- כפתורי אותיות -->
       <div id="letters"></div>
-      <!-- אותיות לניחוש -->
-      <p>Wrong guesses: <span id="wrong-guesses">0</span>/7</p>
+
       <!-- טעויות -->
+      <p>Wrong guesses: <span id="wrong-guesses">0</span>/7</p>
+
+      <!-- כפתורי התחלה מחדש ושמירת תוצאה -->
       <button id="restart">Restart</button>
-      <!-- התחלה מחדש -->
+      <button onclick="saveScore()">Save Score</button>
+      <button onclick="showHighScores()">Show High Scores</button>
     </div>
     <script src="script.js"></script>
   </body>
