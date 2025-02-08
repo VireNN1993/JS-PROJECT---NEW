@@ -1,71 +1,80 @@
-// index.js
-import { Navigation } from "./navigation.js";
-import { ProjectManager } from "./projectManager.js";
-import { FormManager } from "./formManager.js";
-import { ScrollManager } from "./scrollManager.js";
-import { ANIMATION_DEFAULTS } from "./constants.js";
-
-class PortfolioApp {
-  constructor() {
-    this.projectManager = new ProjectManager();
-    this.formManager = new FormManager();
-    this.scrollManager = new ScrollManager();
-    this.navigation = new Navigation();
-    this.initializeApp();
+// Main Application Entry Point
+document.addEventListener("DOMContentLoaded", () => {
+  // Navigation
+  try {
+    const navigation = new Navigation();
+  } catch (error) {
+    console.error("Navigation initialization error:", error);
   }
 
-  initializeApp() {
-    if (window.gsap) {
-      gsap.registerPlugin(ScrollTrigger);
-      this.initHeroAnimations();
-    }
-    this.projectManager.renderProjects();
-    this.formManager.setupContactForm();
-    this.scrollManager.setupBackToTop();
-    this.updateFooterYear();
+  // Project Manager
+  try {
+    const projectManager = new ProjectManager();
+    projectManager.renderProjects();
+  } catch (error) {
+    console.error("Project Manager initialization error:", error);
   }
 
-  initHeroAnimations() {
-    const elements = {
-      title: document.getElementById("hero-title"),
-      subtitle: document.getElementById("hero-subtitle"),
-      button: document.getElementById("hero-button"),
-    };
+  // Form Manager
+  try {
+    const formManager = new FormManager();
+  } catch (error) {
+    console.error("Form Manager initialization error:", error);
+  }
 
-    if (elements.title && elements.subtitle && elements.button) {
-      const timeline = gsap.timeline({ defaults: ANIMATION_DEFAULTS });
-      timeline
+  // Scroll Manager
+  try {
+    const scrollManager = new ScrollManager();
+    scrollManager.setupBackToTop();
+  } catch (error) {
+    console.error("Scroll Manager initialization error:", error);
+  }
+
+  // Update Footer Year
+  const yearElement = document.getElementById("year");
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
+
+  // Setup Background Image
+  const isGithubPages = window.location.hostname.includes("github.io");
+  const backgroundPath = isGithubPages
+    ? "/JS-PROJECT---NEW/Images/backGround.png"
+    : "Images/backGround.png";
+
+  const heroSection = document.querySelector(".hero-section");
+  if (heroSection) {
+    heroSection.style.backgroundImage = `url('${backgroundPath}')`;
+  }
+
+  // GSAP Animations (if GSAP is available)
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const heroTitle = document.getElementById("hero-title");
+    const heroSubtitle = document.getElementById("hero-subtitle");
+    const heroButton = document.getElementById("hero-button");
+
+    if (heroTitle && heroSubtitle && heroButton) {
+      gsap
+        .timeline()
         .fromTo(
-          elements.title,
+          heroTitle,
           { opacity: 0, y: -50 },
           { opacity: 1, y: 0, duration: 1 }
         )
         .fromTo(
-          elements.subtitle,
+          heroSubtitle,
           { opacity: 0, y: -30 },
           { opacity: 1, y: 0, duration: 0.8 }
         )
-        .fromTo(elements.button, { opacity: 0 }, { opacity: 1, duration: 0.5 });
+        .fromTo(heroButton, { opacity: 0 }, { opacity: 1, duration: 0.5 });
     }
   }
-
-  updateFooterYear() {
-    const yearElement = document.getElementById("year");
-    if (yearElement) {
-      yearElement.textContent = new Date().getFullYear();
-    }
-  }
-}
-const isGithubPages = window.location.hostname.includes("github.io");
-const backgroundPath = isGithubPages
-  ? "/JS-PROJECT---NEW/Images/backGround.png"
-  : "Images/backGround.png";
-
-document.querySelector(
-  ".hero-section"
-).style.backgroundImage = `url('${backgroundPath}')`;
-
-// Initialize app
-document.addEventListener("DOMContentLoaded", () => {
-  new PortfolioApp();
 });
+
+// Import necessary modules
+import { Navigation } from "./navigation.js";
+import { ProjectManager } from "./projectManager.js";
+import { FormManager } from "./formManager.js";
+import { ScrollManager } from "./scrollManager.js";

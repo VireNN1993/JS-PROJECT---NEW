@@ -30,6 +30,7 @@
   
               <!-- Desktop Menu -->
               <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-white hover:text-blue-400 transition-colors">Home</a> 
                   <a href="#about" class="text-white hover:text-blue-400 transition-colors">About</a>
                   <a href="#projects" class="text-white hover:text-blue-400 transition-colors">Projects</a>
                   <a href="#contact" class="text-white hover:text-blue-400 transition-colors">Contact</a>
@@ -87,6 +88,7 @@
       </div>
   </div>
     </header>
+     <!-- Hero Section -->
     <header class="hero-section">
       <div
         class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-gray-900"
@@ -311,30 +313,38 @@
         <h2 class="text-4xl font-bold mb-4">Contact Me</h2>
         <form class="mt-6 max-w-xl mx-auto space-y-4">
           <input
-            type="text"
-            class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none"
-            placeholder="Name"
-            required
+              type="text"
+              class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Name"
+              required
           />
           <input
-            type="email"
-            class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none"
-            placeholder="Email"
-            required
+              type="email"
+              class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Email"
+              required
           />
+          <input
+    type="tel"
+    class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    placeholder="Phone number (e.g., +1234567890 or 0501234567)"
+    pattern="[0-9+]*"
+    inputmode="numeric"
+    required
+/>
           <textarea
-            class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none"
-            rows="5"
-            placeholder="Message"
-            required
+              class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              rows="5"
+              placeholder="Message"
+              required
           ></textarea>
           <button
-            type="submit"
-            class="w-full py-3 bg-blue-500 rounded-lg hover:bg-blue-600 transition"
+              type="submit"
+              class="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300"
           >
-            Send Message
+              Send Message
           </button>
-        </form>
+      </form>
       </div>
     </section>
 

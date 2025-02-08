@@ -1,5 +1,31 @@
+document.addEventListener("DOMContentLoaded", () => {
+  let mainGameContainer = document.querySelector(".terminal-container");
+  mainGameContainer.style.display = "none";
+
+  let startScreen = document.createElement("div");
+  startScreen.id = "start-screen";
+  startScreen.style.position = "fixed";
+  startScreen.style.top = "0";
+  startScreen.style.left = "0";
+  startScreen.style.width = "100vw";
+  startScreen.style.height = "100vh";
+  startScreen.style.display = "flex";
+  startScreen.style.flexDirection = "column";
+  startScreen.style.justifyContent = "center";
+  startScreen.style.alignItems = "center";
+  startScreen.style.background = "black";
+  startScreen.style.color = "#33ff33";
+  startScreen.innerHTML = `<h1>Math Terminal Game</h1><button id='start-game' style='padding: 15px 25px; font-size: 1.5rem; background: #33ff33; color: #000; border: none; border-radius: 8px; cursor: pointer;'>Start Game</button>`;
+  document.body.appendChild(startScreen);
+
+  document.getElementById("start-game").addEventListener("click", () => {
+    startScreen.style.display = "none";
+    mainGameContainer.style.display = "block";
+    startGame();
+  });
+});
+
 const startGame = () => {
-  // Select elements from the DOM
   let operatorSelect = document.querySelector("#operator");
   let rangeSelect = document.querySelector("#range");
   let num1Span = document.querySelector("#num1");
@@ -8,130 +34,141 @@ const startGame = () => {
   let answerInput = document.querySelector("#answer");
   let checkButton = document.querySelector("#check");
   let resultsTable = document.querySelector("#results");
-  let timerBar = document.querySelector("#timer-bar"); // Progress bar
-  let timerText = document.querySelector("#timer-text"); // Timer text
+  let timerBar = document.querySelector("#timer-bar");
+  let timerText = document.querySelector("#timer-text");
+  let scoreDisplay = document.createElement("div");
 
-  // Global variables
-  let num1 = 0;
-  let num2 = 0;
-  let correctAnswer = 0;
-  let attempts = 0;
-  let timer = null; // Timer ID
+  scoreDisplay.id = "score-display";
+  scoreDisplay.style.position = "absolute";
+  scoreDisplay.style.top = "10px";
+  scoreDisplay.style.right = "20px";
+  scoreDisplay.style.color = "#33ff33";
+  scoreDisplay.style.fontSize = "1.5rem";
+  scoreDisplay.textContent = "Score: 0";
+  document.body.appendChild(scoreDisplay);
 
-  // Generate a new question
+  // Add a display for the current question number
+  let questionNumberDisplay = document.createElement("div");
+  questionNumberDisplay.id = "question-number";
+  questionNumberDisplay.style.position = "absolute";
+  questionNumberDisplay.style.top = "10px";
+  questionNumberDisplay.style.left = "20px";
+  questionNumberDisplay.style.color = "#33ff33";
+  questionNumberDisplay.style.fontSize = "1.5rem";
+  questionNumberDisplay.textContent = "Question: 1/10";
+  document.body.appendChild(questionNumberDisplay);
+
+  let num1 = 0,
+    num2 = 0,
+    correctAnswer = 0,
+    attempts = 0,
+    timer = null,
+    score = 0,
+    currentQuestion = 1; // Track the current question number
+
   const generateQuestion = () => {
-    clearInterval(timer); // Stop the previous timer
-    resetTimer(); // Reset the timer
+    if (currentQuestion > 10) {
+      alert(
+        "Game Over! You have answered 10 questions."`You score is : ${score}`
+      );
+      return;
+    }
+
+    clearInterval(timer);
+    resetTimer();
 
     let range = parseInt(rangeSelect.value);
     let operator = operatorSelect.value;
-
-    // Generate random numbers
     num1 = Math.floor(Math.random() * range) + 1;
     num2 = Math.floor(Math.random() * range) + 1;
 
-    // Ensure num1 >= num2 for subtraction and division
-    if (operator === "-" && num1 < num2) {
-      [num1, num2] = [num2, num1];
-    }
-    if (operator === "/" && num1 < num2) {
-      [num1, num2] = [num2, num1];
-    }
+    if (operator === "-" && num1 < num2) [num1, num2] = [num2, num1];
+    if (operator === "/" && num1 < num2) [num1, num2] = [num2, num1];
 
     operatorSpan.textContent = operator;
     num1Span.textContent = num1;
     num2Span.textContent = num2;
 
-    // Calculate the correct answer
-    if (operator === "+") {
-      correctAnswer = num1 + num2;
-    } else if (operator === "-") {
-      correctAnswer = num1 - num2;
-    } else if (operator === "*") {
-      correctAnswer = num1 * num2;
-    } else if (operator === "/") {
+    if (operator === "+") correctAnswer = num1 + num2;
+    else if (operator === "-") correctAnswer = num1 - num2;
+    else if (operator === "*") correctAnswer = num1 * num2;
+    else if (operator === "/")
       correctAnswer = Math.round((num1 / num2) * 100) / 100;
-    }
 
-    startTimer(); // Start the timer
+    startTimer();
   };
 
-  // Reset the timer
   const resetTimer = () => {
     timerBar.style.width = "100%";
     timerText.textContent = "10 Seconds";
   };
 
-  // Start the timer
   const startTimer = () => {
-    let timeLeft = 10; // Total time in seconds
+    let timeLeft = 10;
     timerText.textContent = `${timeLeft} Seconds`;
 
     timer = setInterval(() => {
       timeLeft--;
       timerText.textContent = `${timeLeft} Seconds`;
-      timerBar.style.width = `${(timeLeft / 10) * 100}%`; // Adjust bar width
+      timerBar.style.width = `${(timeLeft / 10) * 100}%`;
 
       if (timeLeft <= 0) {
-        clearInterval(timer); // Stop the timer
-        alert("Time's up! A new question will be displayed.");
-        addUnansweredRow(); // Add an unanswered row to the results
-        generateQuestion(); // Generate a new question
+        clearInterval(timer);
+        addResult("Time's up!", false);
+        currentQuestion++;
+        questionNumberDisplay.textContent = `Question: ${currentQuestion}/10`;
+        generateQuestion();
       }
     }, 1000);
   };
 
-  // Add an unanswered row
-  const addUnansweredRow = () => {
+  const addResult = (userAnswer, isCorrect) => {
     attempts++;
-
-    let newRow = `
-      <tr>
-        <td>${attempts}</td>
-        <td>${correctAnswer}</td>
-        <td>לא נענתה</td>
-        <td>${num1} ${operatorSpan.textContent} ${num2}</td>
-      </tr>`;
-    resultsTable.innerHTML += newRow;
+    let resultText = isCorrect ? "✅ Correct" : "❌ Incorrect";
+    if (isCorrect) score += 10;
+    scoreDisplay.textContent = `Score: ${score}`;
+    let newRow = document.createElement("tr");
+    newRow.innerHTML = `<td>${attempts}</td><td>${correctAnswer}</td><td>${
+      userAnswer || "No Answer"
+    } (${resultText})</td><td>${num1} ${operatorSpan.textContent} ${num2}</td>`;
+    resultsTable.appendChild(newRow);
   };
 
-  // Check the user's answer
   checkButton.onclick = () => {
-    let userAnswer = parseFloat(answerInput.value);
-    attempts++;
-
-    // Add a new row to the results table
-    let newRow = `
-      <tr>
-        <td>${attempts}</td>
-        <td>${correctAnswer}</td>
-        <td>${userAnswer || "לא הוזנה תשובה"}</td>
-        <td>${num1} ${operatorSpan.textContent} ${num2}</td>
-      </tr>`;
-    resultsTable.innerHTML += newRow;
-
-    if (userAnswer === correctAnswer) {
-      alert("כל הכבוד! התשובה נכונה.");
-    } else {
-      alert("התשובה שגויה. נסו שוב.");
+    let userAnswer = answerInput.value.trim();
+    if (!userAnswer.match(/^\d+$/)) {
+      alert("Invalid input! Please enter numbers only.");
+      return;
     }
-
-    answerInput.value = ""; // Clear the answer input
-    generateQuestion(); // Generate a new question
-  };
-
-  // Update the question when the operator changes
-  operatorSelect.onchange = () => {
+    let isCorrect = parseInt(userAnswer) === correctAnswer;
+    addResult(parseInt(userAnswer), isCorrect);
+    answerInput.value = "";
+    currentQuestion++;
+    questionNumberDisplay.textContent = `Question: ${currentQuestion}/10`;
     generateQuestion();
   };
 
-  // Update the question when the range changes
-  rangeSelect.onchange = () => {
-    generateQuestion();
+  const restartGame = () => {
+    location.reload();
   };
 
-  generateQuestion(); // Start with the first question
+  let restartButton = document.createElement("button");
+  restartButton.textContent = "New Game";
+  restartButton.style.position = "absolute";
+  restartButton.style.bottom = "20px";
+  restartButton.style.left = "50%";
+  restartButton.style.transform = "translateX(-50%)";
+  restartButton.style.padding = "10px 20px";
+  restartButton.style.fontSize = "1.5rem";
+  restartButton.style.background = "#33ff33";
+  restartButton.style.color = "#000";
+  restartButton.style.border = "none";
+  restartButton.style.borderRadius = "8px";
+  restartButton.style.cursor = "pointer";
+  restartButton.onclick = restartGame;
+  document.body.appendChild(restartButton);
+
+  operatorSelect.onchange = generateQuestion;
+  rangeSelect.onchange = generateQuestion;
+  generateQuestion();
 };
-
-// Start the game
-startGame();

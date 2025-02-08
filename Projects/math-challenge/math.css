@@ -9,11 +9,12 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Terminal Container */
 .terminal-container {
-  width: 90%;
+  width: 100%;
   max-width: 800px;
   background: #111;
   border: 5px solid #33ff33;
@@ -42,6 +43,11 @@ body {
 .question {
   font-size: 1.5rem;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 input#answer {
@@ -52,6 +58,7 @@ input#answer {
   padding: 5px;
   font-size: 1.2rem;
   text-align: center;
+  max-width: 100%;
 }
 
 input#answer:focus {
@@ -62,6 +69,10 @@ input#answer:focus {
 /* Controls */
 .controls {
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 select {
@@ -156,4 +167,107 @@ button:hover {
 
 .results-table tbody tr:hover {
   background: #222;
+}
+
+#question-number {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  color: #33ff33;
+  font-size: 1.5rem;
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media screen and (max-width: 600px) {
+  .terminal-container {
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    border: none;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+  }
+
+  .terminal-header {
+    font-size: 1.5rem;
+  }
+
+  .question {
+    font-size: 1.2rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  input#answer {
+    width: 100%;
+    max-width: 200px;
+    margin: 10px 0;
+    font-size: 1rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  select {
+    width: 100%;
+    max-width: 250px;
+    margin: 5px 0;
+  }
+
+  #question-number {
+    position: static;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  #score-display {
+    position: static;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .results-table {
+    font-size: 0.9rem;
+  }
+
+  .results-table th,
+  .results-table td {
+    padding: 5px;
+  }
+
+  /* Ensure full-screen behavior */
+  body {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .terminal-header {
+    font-size: 1.3rem;
+  }
+
+  .question {
+    font-size: 1rem;
+  }
+
+  .results-table {
+    font-size: 0.8rem;
+  }
+
+  .results-table th,
+  .results-table td {
+    padding: 3px;
+  }
 }

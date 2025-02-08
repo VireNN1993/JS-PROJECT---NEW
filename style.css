@@ -1,3 +1,4 @@
+/* Variables */
 :root {
   --primary: #3b82f6;
   --primary-dark: #2563eb;
@@ -5,20 +6,24 @@
   --text-light: #f3f4f6;
   --text-dark: #1f2937;
   --transition: all 0.3s ease;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Base Styles */
 body {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   line-height: 1.5;
   transition: var(--transition);
 }
 
+/* Theme Modes */
 .dark-mode {
   background-color: var(--bg-dark);
   color: var(--text-light);
@@ -29,11 +34,13 @@ body {
   color: var(--text-dark);
 }
 
+/* Navigation */
 #navbar {
   transition: var(--transition);
   backdrop-filter: blur(8px);
 }
 
+/* Hero Section */
 .hero-section {
   min-height: 100vh;
   position: relative;
@@ -47,6 +54,12 @@ body {
   text-align: center;
 }
 
+.hero-content p {
+  color: rgba(243, 244, 246, 0.9) !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Projects */
 .project-card {
   transition: var(--transition);
   cursor: pointer;
@@ -62,10 +75,10 @@ body {
 
 .light-mode .project-card {
   background: white;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
 }
 
-/* Modal Styles */
+/* Modal */
 .modal {
   display: none;
   position: fixed;
@@ -114,7 +127,7 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: all 0.3s ease;
+  transition: var(--transition);
 }
 
 .close-button:hover {
@@ -136,6 +149,7 @@ body {
   object-fit: cover;
 }
 
+/* Forms */
 input,
 textarea {
   width: 100%;
@@ -161,6 +175,7 @@ textarea:focus {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
+/* Back to Top Button */
 #backToTop {
   position: fixed;
   display: flex;
@@ -192,6 +207,7 @@ textarea:focus {
   opacity: 1;
 }
 
+/* Media Queries */
 @media (max-width: 768px) {
   .hero-content {
     padding: 1rem;
