@@ -1,17 +1,3 @@
-/**
- * projectManager.js - Project Gallery Management
- * Full Stack Portfolio Project
- * Author: Natan Blochin
- *
- * Manages the display and interaction of portfolio projects.
- * Features:
- * - Dynamic project card creation
- * - Modal window for detailed project view
- * - GSAP animations for smooth transitions
- * - Responsive image handling
- * - Interactive project cards with hover effects
- */
-
 import { projects } from "./projectsData.js";
 
 export class ProjectManager {
@@ -91,10 +77,7 @@ export class ProjectManager {
 
     // Set action buttons
     previewButton.href = project.link;
-    downloadButton.href = `${project.link.replace(
-      "index.html",
-      ""
-    )}download/game.zip`;
+    downloadButton.href = project.download; // עדכון הקישור להורדה
 
     // Show modal with animation
     modal.style.display = "flex";

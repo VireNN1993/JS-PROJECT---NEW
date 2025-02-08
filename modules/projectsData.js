@@ -4,8 +4,9 @@ export const projects = [
     title: "Math Challenge",
     image: "Images/math img.png",
     description:
-      "Interactive math game featuring multiple difficulty levels and real-time scoring. Test and improve your math skills with engaging exercises.",
+      "Interactive math game featuring multiple difficulty levels and real-time scoring.",
     link: "./Projects/math-challenge/math.html",
+    download: "./Downloads/math-challenge.rar", // קישור להורדה
     tags: ["JavaScript", "Math", "Game"],
     technologies: ["HTML5", "CSS3", "JavaScript"],
   },
@@ -13,9 +14,9 @@ export const projects = [
     id: 2,
     title: "Hangman Game",
     image: "Images/hangMan.png",
-    description:
-      "Classic word guessing game with extensive word database. Challenge yourself with various categories and difficulty levels.",
-    link: "Projects/HangMan Game/index.html",
+    description: "Classic word guessing game with extensive word database.",
+    link: "Projects/HangMan Game/hangman.html",
+    download: "./Downloads/HangMan Game.rar", // קישור להורדה
     tags: ["JavaScript", "Game", "Words"],
     technologies: ["HTML5", "CSS3", "JavaScript"],
   },
@@ -24,8 +25,9 @@ export const projects = [
     title: "Pokemon Project",
     image: "Images/Pokemon.png",
     description:
-      "Comprehensive Pokemon database with search and filtering capabilities. Explore detailed information about your favorite Pokemon.",
-    link: "Projects/Pokemon Project/index.html",
+      "Comprehensive Pokemon database with search and filtering capabilities.",
+    link: "Projects/Pokemon Project/pokemon.html",
+    download: "./Downloads/Pokemon Project.rar", // קישור להורדה
     tags: ["API", "Pokemon", "Database"],
     technologies: ["HTML5", "CSS3", "JavaScript", "REST API"],
   },
@@ -34,8 +36,9 @@ export const projects = [
     title: "Snake Game",
     image: "Images/snakee.png",
     description:
-      "Modern implementation of the classic Snake game with special features and power-ups. Test your reflexes and strategy.",
-    link: "Projects/Snake Game/index.html",
+      "Modern implementation of the classic Snake game with special features and power-ups.",
+    link: "Projects/Snake Game/snake.html",
+    download: "./Downloads/Snake Game.rar", // קישור להורדה
     tags: ["JavaScript", "Game", "Retro"],
     technologies: ["HTML5", "Canvas", "JavaScript"],
   },
@@ -44,8 +47,9 @@ export const projects = [
     title: "Screen Builder",
     image: "Images/screen Img.png",
     description:
-      "Visual tool for creating screen layouts with drag-and-drop functionality. Design responsive layouts easily.",
+      "Visual tool for creating screen layouts with drag-and-drop functionality.",
     link: "Projects/screen-builder/screen.html",
+    download: "./Downloads/screen-builder.rar", // קישור להורדה
     tags: ["UI", "Design", "Tool"],
     technologies: ["HTML5", "CSS3", "JavaScript"],
   },
@@ -53,9 +57,9 @@ export const projects = [
     id: 6,
     title: "Countries API",
     image: "Images/countries.png",
-    description:
-      "Explore country information using REST API. Search and filter countries by various criteria.",
-    link: "Projects/Contries Porject/index.html",
+    description: "Explore country information using REST API.",
+    link: "Projects/Contries Porject/countries.html",
+    download: "./Downloads/Contries Porject.rar", // קישור להורדה
     tags: ["API", "Countries", "Database"],
     technologies: ["HTML5", "CSS3", "JavaScript", "REST API"],
   },
