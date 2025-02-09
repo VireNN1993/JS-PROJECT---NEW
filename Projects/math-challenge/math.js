@@ -43,7 +43,6 @@ const startGame = () => {
   let timerBar = document.querySelector("#timer-bar");
   let timerText = document.querySelector("#timer-text");
 
-  // Add skip button
   let skipButton = document.createElement("button");
   skipButton.textContent = "Skip";
   skipButton.style.marginLeft = "10px";
