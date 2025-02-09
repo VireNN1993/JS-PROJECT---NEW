@@ -1,17 +1,34 @@
+/**
+ * projectManager.js - Project Gallery Management
+ * Full Stack Portfolio Project
+ * Author: Natan Blochin
+ *
+ * This module manages the project gallery functionality:
+ * - Dynamic project card creation
+ * - Modal interactions
+ * - GSAP animations
+ *
+ * Technologies used:
+ * - JavaScript ES6+
+ * - GSAP for animations
+ * - DOM Manipulation
+ * - Event Handling
+ */
+
 import { projects } from "./projectsData.js";
 
 export class ProjectManager {
   /**
-   * Creates a project card with image, description, and technologies
-   * @param {Object} project - Project data object
-   * @returns {HTMLElement} Project card element
+   * Creates an interactive project card with animation and hover effects
+   * @param {Object} project - Project data containing title, image, description, etc.
+   * @returns {HTMLElement} Styled project card element
    */
   createProjectCard(project) {
     const card = document.createElement("div");
     card.className =
       "project-card bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300";
 
-    // Create card HTML with hover effects and responsive image
+    // Generate project card HTML structure with Tailwind CSS
     card.innerHTML = `
             <div class="relative group overflow-hidden rounded-lg">
                 <img 
@@ -40,16 +57,17 @@ export class ProjectManager {
             </div>
         `;
 
-    // Add click handler for modal
+    // Add modal trigger
     card.addEventListener("click", () => this.openProjectModal(project));
     return card;
   }
 
   /**
-   * Opens modal window with detailed project information
-   * @param {Object} project - Project data object
+   * Handles project modal display and interaction
+   * @param {Object} project - Project data to be displayed in modal
    */
   openProjectModal(project) {
+    // Get modal elements
     const modal = document.getElementById("projectModal");
     const modalImage = document.getElementById("modalImage");
     const modalTitle = document.getElementById("modalTitle");
@@ -58,7 +76,7 @@ export class ProjectManager {
     const previewButton = document.getElementById("previewButton");
     const downloadButton = document.getElementById("downloadButton");
 
-    // Set modal content
+    // Populate modal content
     modalImage.src = project.image;
     modalImage.alt = project.title;
     modalTitle.textContent = project.title;
@@ -77,7 +95,7 @@ export class ProjectManager {
 
     // Set action buttons
     previewButton.href = project.link;
-    downloadButton.href = project.download; // עדכון הקישור להורדה
+    downloadButton.href = project.download;
 
     // Show modal with animation
     modal.style.display = "flex";
@@ -88,8 +106,8 @@ export class ProjectManager {
   }
 
   /**
-   * Sets up modal close handlers for different interactions
-   * @param {HTMLElement} modal - Modal element
+   * Sets up event handlers for modal closing
+   * @param {HTMLElement} modal - Modal element to handle
    */
   setupModalCloseHandlers(modal) {
     const closeButton = modal.querySelector(".close-button");
@@ -101,23 +119,23 @@ export class ProjectManager {
       }, 300);
     };
 
-    // Close button click
+    // Close button click handler
     closeButton.onclick = closeModal;
 
-    // Click outside modal
+    // Click outside modal handler
     modal.onclick = (e) => {
       if (e.target === modal) closeModal();
     };
 
-    // Escape key press
+    // Escape key handler
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeModal();
     });
   }
 
   /**
-   * Renders all projects to the projects container
-   * with GSAP animations for each card
+   * Initializes project gallery with animation
+   * Uses GSAP for scroll-triggered animations
    */
   renderProjects() {
     const container = document.getElementById("projects-container");
@@ -131,8 +149,8 @@ export class ProjectManager {
   }
 
   /**
-   * Adds scroll-triggered animation to project card
-   * @param {HTMLElement} card - Project card element
+   * Applies GSAP scroll animation to project card
+   * @param {HTMLElement} card - Project card to animate
    */
   animateProjectCard(card) {
     gsap.fromTo(

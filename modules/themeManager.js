@@ -1,4 +1,10 @@
-// themeManager.js
+/**
+ * themeManager.js - Theme Management System
+ * Full Stack Portfolio Project
+ * Author: Natan Blochin
+ *
+ * Manages theme switching and UI updates across the application
+ */
 
 export function toggleDarkMode() {
   const body = document.body;
@@ -15,6 +21,10 @@ export function toggleDarkMode() {
   updateThemeButtons(isDark);
 }
 
+/**
+ * Update hamburger menu appearance based on theme
+ * @param {boolean} isDark - Current theme state
+ */
 function updateHamburgerMenu(isDark) {
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");
   if (!mobileMenuBtn) return;
@@ -30,6 +40,10 @@ function updateHamburgerMenu(isDark) {
   }
 }
 
+/**
+ * Update mobile navigation styling
+ * @param {boolean} isDark - Current theme state
+ */
 function updateMobileNav(isDark) {
   const mobileNav = document.getElementById("mobile-nav");
   if (!mobileNav) return;
@@ -43,6 +57,10 @@ function updateMobileNav(isDark) {
   });
 }
 
+/**
+ * Update main navigation bar styling
+ * @param {boolean} isDark - Current theme state
+ */
 function updateNavbar(isDark) {
   const navbar = document.getElementById("navbar");
   if (!navbar) return;
@@ -57,6 +75,10 @@ function updateNavbar(isDark) {
   });
 }
 
+/**
+ * Update section backgrounds and colors
+ * @param {boolean} isDark - Current theme state
+ */
 function updateSections(isDark) {
   document.querySelectorAll(".section").forEach((section) => {
     const isProjects = section.id === "projects";
@@ -73,8 +95,12 @@ function updateSections(isDark) {
   });
 }
 
+/**
+ * Update text colors throughout the site
+ * @param {boolean} isDark - Current theme state
+ */
 function updateTextColors(isDark) {
-  // עדכון טקסטים רגילים
+  // Update regular text elements
   document
     .querySelectorAll("p, .text-gray-300, .text-gray-400")
     .forEach((el) => {
@@ -89,23 +115,28 @@ function updateTextColors(isDark) {
       }
     });
 
-  // עדכון כותרות
+  // Update headings
   document.querySelectorAll("h2, h3").forEach((el) => {
     el.style.color = isDark ? "#111827" : "#FFFFFF";
   });
 
-  // עדכון education section
+  // Update education section text
   document.querySelectorAll(".education-text").forEach((el) => {
     el.style.color = isDark ? "#4B5563" : "#FFFFFF";
   });
 
-  // עדכון האייקונים החברתיים
+  // Update social media icons
   document.querySelectorAll(".social-icons a").forEach((el) => {
     el.style.color = isDark ? "#4B5563" : "#D1D5DB";
   });
 }
 
+/**
+ * Update theme toggle buttons appearance
+ * @param {boolean} isDark - Current theme state
+ */
 function updateThemeButtons(isDark) {
+  // Update desktop theme button
   const themeToggle = document.getElementById("theme-toggle");
   if (themeToggle) {
     themeToggle.textContent = isDark ? "🌙 Dark Mode" : "☀️ Light Mode";
@@ -114,6 +145,7 @@ function updateThemeButtons(isDark) {
     }`;
   }
 
+  // Update mobile theme button
   const mobileThemeToggle = document.getElementById("mobile-theme-toggle");
   if (mobileThemeToggle) {
     const icon = mobileThemeToggle.querySelector("svg");

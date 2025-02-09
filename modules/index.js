@@ -2,17 +2,8 @@
  * index.js - Main Application Entry Point
  * Full Stack Portfolio Project
  * Author: Natan Blochin
- *
- * This module initializes and coordinates all core application features:
- * - Navigation system
- * - Project gallery management
- * - Contact form handling
- * - Scroll behavior
- * - Theme management
- * - GSAP animations
  */
 
-// Import core modules
 import { Navigation } from "./navigation.js";
 import { ProjectManager } from "./projectManager.js";
 import { FormManager } from "./formManager.js";
@@ -23,22 +14,20 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeCore();
   setupBackgroundImage();
   initializeAnimations();
+  setupSmoothScroll();
   updateFooterYear();
 });
 
 /**
  * Initialize core application features
- * Each feature is wrapped in error handling to prevent cascading failures
  */
 function initializeCore() {
-  // Initialize Navigation
   try {
     const navigation = new Navigation();
   } catch (error) {
     console.error("Navigation initialization error:", error);
   }
 
-  // Initialize Project Manager
   try {
     const projectManager = new ProjectManager();
     projectManager.renderProjects();
@@ -46,14 +35,12 @@ function initializeCore() {
     console.error("Project Manager initialization error:", error);
   }
 
-  // Initialize Form Manager
   try {
     const formManager = new FormManager();
   } catch (error) {
     console.error("Form Manager initialization error:", error);
   }
 
-  // Initialize Scroll Manager
   try {
     const scrollManager = new ScrollManager();
     scrollManager.setupBackToTop();
@@ -63,8 +50,37 @@ function initializeCore() {
 }
 
 /**
- * Setup dynamic background image path based on environment
- * Handles both local and GitHub Pages environments
+ * Setup smooth scroll for Explore Projects button
+ */
+function setupSmoothScroll() {
+  const exploreButton = document.getElementById("hero-button");
+
+  if (exploreButton) {
+    exploreButton.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const projectsSection = document.getElementById("projects");
+
+      if (projectsSection) {
+        const startY = window.pageYOffset;
+        const endY =
+          projectsSection.getBoundingClientRect().top + window.pageYOffset;
+
+        gsap.to(window, {
+          duration: 2,
+          scrollTo: {
+            y: endY,
+            autoKill: false,
+          },
+          ease: "power2.inOut",
+        });
+      }
+    });
+  }
+}
+
+/**
+ * Setup dynamic background image path
  */
 function setupBackgroundImage() {
   const isGithubPages = window.location.hostname.includes("github.io");
@@ -79,8 +95,7 @@ function setupBackgroundImage() {
 }
 
 /**
- * Initialize GSAP animations for hero section
- * Creates smooth entrance animations for title, subtitle, and button
+ * Initialize GSAP animations
  */
 function initializeAnimations() {
   if (window.gsap && window.ScrollTrigger) {
@@ -109,7 +124,7 @@ function initializeAnimations() {
 }
 
 /**
- * Update footer year to current year
+ * Update footer year
  */
 function updateFooterYear() {
   const yearElement = document.getElementById("year");

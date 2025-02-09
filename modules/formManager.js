@@ -1,34 +1,50 @@
-// formManager.js
+/**
+ * formManager.js - Contact Form Management
+ * Full Stack Portfolio Project
+ * Author: Natan Blochin
+ *
+ * Manages contact form functionality including:
+ * - Form validation
+ * - Real-time input formatting
+ * - User feedback
+ * - Error handling
+ *
+ * Technologies used:
+ * - JavaScript ES6+
+ * - DOM Events
+ * - Regular Expressions
+ * - Form Validation
+ */
+
 import { NOTIFICATION_DURATION } from "./constants.js";
 
-/**
- * FormManager class - Handles contact form operations
- */
 export class FormManager {
+  /**
+   * Initialize form manager and bind DOM elements
+   * Sets up event handlers when DOM is ready
+   */
   constructor() {
     document.addEventListener("DOMContentLoaded", () => {
       this.form = document.querySelector("form");
       if (!this.form) return;
-
       this.initializeForm();
     });
   }
 
   /**
-   * Initialize form elements and event listeners
+   * Set up form elements and event listeners
+   * Initializes validation and input formatting
    */
   initializeForm() {
-    // Get form elements
+    // Bind form elements
     this.nameInput = this.form.querySelector('input[type="text"]');
     this.emailInput = this.form.querySelector('input[type="email"]');
     this.phoneInput = this.form.querySelector('input[type="tel"]');
     this.messageInput = this.form.querySelector("textarea");
     this.submitButton = this.form.querySelector('button[type="submit"]');
 
-    // Add form submission handler
+    // Set up event listeners
     this.form.addEventListener("submit", (e) => this.handleSubmit(e));
-
-    // Add phone number formatter
     if (this.phoneInput) {
       this.phoneInput.addEventListener("input", (e) =>
         this.formatPhoneNumber(e)
@@ -37,31 +53,25 @@ export class FormManager {
   }
 
   /**
-   * Format phone number as user types
+   * Handle phone number input formatting
+   * Supports multiple phone number formats
+   * @param {Event} e - Input event
    */
   formatPhoneNumber(e) {
     let value = e.target.value;
-
-    // Allow only numbers and + at the start
     value = value.replace(/[^\d+]/g, "");
 
-    // Ensure + only appears at the start
     if (value.includes("+")) {
       value = "+" + value.replace(/\+/g, "");
     }
 
-    // Limit length to 15 digits (standard E.164 format)
-    if (value.startsWith("+")) {
-      value = value.slice(0, 16); // +15 digits
-    } else {
-      value = value.slice(0, 15); // 15 digits
-    }
-
-    e.target.value = value;
+    e.target.value = value.slice(0, value.startsWith("+") ? 16 : 15);
   }
 
   /**
-   * Validate email format
+   * Validate email format using regex
+   * @param {string} email - Email to validate
+   * @returns {boolean} Validation result
    */
   validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -70,34 +80,30 @@ export class FormManager {
 
   /**
    * Validate phone number format
-   * Accepts:
-   * - Local numbers (7-15 digits)
-   * - International numbers with + prefix
+   * Supports international and local formats
+   * @param {string} phone - Phone number to validate
+   * @returns {boolean} Validation result
    */
   validatePhone(phone) {
     const phoneClean = phone.replace(/\s+/g, "");
-
-    // Check if empty
     if (!phoneClean) return false;
 
-    // If starts with +, check for international format
     if (phoneClean.startsWith("+")) {
       return /^\+\d{7,15}$/.test(phoneClean);
     }
-
-    // Otherwise check for regular format (7-15 digits)
     return /^\d{7,15}$/.test(phoneClean);
   }
 
   /**
-   * Show notification message
+   * Display notification message to user
+   * @param {string} message - Message to display
+   * @param {string} type - Message type (success/error)
    */
   showNotification(message, type = "error") {
-    // Remove any existing notifications
-    const existingNotifications = document.querySelectorAll(
-      ".notification-message"
-    );
-    existingNotifications.forEach((n) => n.remove());
+    // Remove existing notifications
+    document
+      .querySelectorAll(".notification-message")
+      .forEach((n) => n.remove());
 
     // Create notification element
     const notification = document.createElement("div");
@@ -112,10 +118,8 @@ export class FormManager {
         `;
     notification.textContent = message;
 
-    // Add to document
+    // Show and auto-remove notification
     document.body.appendChild(notification);
-
-    // Remove after delay
     setTimeout(() => {
       notification.classList.add("opacity-0");
       setTimeout(() => notification.remove(), 300);
@@ -124,35 +128,34 @@ export class FormManager {
 
   /**
    * Validate all form fields
+   * @returns {boolean} Overall form validity
    */
   validateForm() {
     let isValid = true;
     const errors = [];
 
-    // Validate name
+    // Validate each field
     if (!this.nameInput.value.trim()) {
       errors.push("Please enter your name");
       isValid = false;
     }
 
-    // Validate email
     if (!this.validateEmail(this.emailInput.value)) {
       errors.push("Please enter a valid email address");
       isValid = false;
     }
 
-    // Validate phone
     if (!this.validatePhone(this.phoneInput.value)) {
-      errors.push("Please enter a valid phone number (7-15 digits)");
+      errors.push("Please enter a valid phone number");
       isValid = false;
     }
 
-    // Validate message
     if (!this.messageInput.value.trim()) {
       errors.push("Please enter a message");
       isValid = false;
     }
 
+    // Show first error if validation fails
     if (!isValid) {
       this.showNotification(errors[0], "error");
     }
@@ -162,12 +165,14 @@ export class FormManager {
 
   /**
    * Handle form submission
+   * Prevents default submission and validates input
+   * @param {Event} e - Submit event
    */
   handleSubmit(e) {
     e.preventDefault();
 
     if (this.validateForm()) {
-      // Here you would typically send the data to a server
+      // Form is valid - show success message
       this.showNotification("Message sent successfully!", "success");
       this.form.reset();
     }

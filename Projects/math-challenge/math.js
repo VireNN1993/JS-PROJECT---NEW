@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let mainGameContainer = document.querySelector(".terminal-container");
   mainGameContainer.style.display = "none";
 
+  // Create start screen
   let startScreen = document.createElement("div");
   startScreen.id = "start-screen";
   startScreen.style.position = "fixed";
@@ -15,7 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
   startScreen.style.alignItems = "center";
   startScreen.style.background = "black";
   startScreen.style.color = "#33ff33";
-  startScreen.innerHTML = `<h1>Math Terminal Game</h1><button id='start-game' style='padding: 15px 25px; font-size: 1.5rem; background: #33ff33; color: #000; border: none; border-radius: 8px; cursor: pointer;'>Start Game</button>`;
+  startScreen.innerHTML = `
+    <h1>Math Terminal Game</h1>
+    <p>3 wrong answers will end the game</p>
+    <p>You can skip questions using the "Skip" button</p>
+    <button id='start-game' style='padding: 15px 25px; font-size: 1.5rem; background: #33ff33; color: #000; border: none; border-radius: 8px; cursor: pointer;'>Start Game</button>
+  `;
   document.body.appendChild(startScreen);
 
   document.getElementById("start-game").addEventListener("click", () => {
@@ -36,8 +42,25 @@ const startGame = () => {
   let resultsTable = document.querySelector("#results");
   let timerBar = document.querySelector("#timer-bar");
   let timerText = document.querySelector("#timer-text");
-  let scoreDisplay = document.createElement("div");
 
+  // Add skip button
+  let skipButton = document.createElement("button");
+  skipButton.textContent = "Skip";
+  skipButton.style.marginLeft = "10px";
+  checkButton.parentNode.appendChild(skipButton);
+
+  // Add error counter display
+  let errorDisplay = document.createElement("div");
+  errorDisplay.id = "error-display";
+  errorDisplay.style.position = "absolute";
+  errorDisplay.style.top = "10px";
+  errorDisplay.style.right = "150px";
+  errorDisplay.style.color = "#ff3333";
+  errorDisplay.style.fontSize = "1.5rem";
+  errorDisplay.textContent = "Errors: 0/3";
+  document.body.appendChild(errorDisplay);
+
+  let scoreDisplay = document.createElement("div");
   scoreDisplay.id = "score-display";
   scoreDisplay.style.position = "absolute";
   scoreDisplay.style.top = "10px";
@@ -47,7 +70,6 @@ const startGame = () => {
   scoreDisplay.textContent = "Score: 0";
   document.body.appendChild(scoreDisplay);
 
-  // Add a display for the current question number
   let questionNumberDisplay = document.createElement("div");
   questionNumberDisplay.id = "question-number";
   questionNumberDisplay.style.position = "absolute";
@@ -64,13 +86,12 @@ const startGame = () => {
     attempts = 0,
     timer = null,
     score = 0,
-    currentQuestion = 1; // Track the current question number
+    errors = 0,
+    currentQuestion = 1;
 
   const generateQuestion = () => {
-    if (currentQuestion > 10) {
-      alert(
-        "Game Over! You have answered 10 questions."`You score is : ${score}`
-      );
+    if (currentQuestion > 10 || errors >= 3) {
+      endGame();
       return;
     }
 
@@ -96,6 +117,8 @@ const startGame = () => {
       correctAnswer = Math.round((num1 / num2) * 100) / 100;
 
     startTimer();
+    answerInput.value = "";
+    answerInput.focus();
   };
 
   const resetTimer = () => {
@@ -114,59 +137,96 @@ const startGame = () => {
 
       if (timeLeft <= 0) {
         clearInterval(timer);
-        addResult("Time's up!", false);
-        currentQuestion++;
-        questionNumberDisplay.textContent = `Question: ${currentQuestion}/10`;
-        generateQuestion();
+        handleWrongAnswer("Time's up!");
       }
     }, 1000);
   };
 
+  const handleWrongAnswer = (userAnswer) => {
+    errors++;
+    errorDisplay.textContent = `Errors: ${errors}/3`;
+    addResult(userAnswer, false);
+
+    if (errors >= 3) {
+      endGame();
+    } else {
+      currentQuestion++;
+      questionNumberDisplay.textContent = `Question: ${currentQuestion}/10`;
+      generateQuestion();
+    }
+  };
+
   const addResult = (userAnswer, isCorrect) => {
     attempts++;
-    let resultText = isCorrect ? "✅ Correct" : "❌ Incorrect";
+    let resultText = isCorrect ? "✅ Correct" : "❌ Wrong";
     if (isCorrect) score += 10;
     scoreDisplay.textContent = `Score: ${score}`;
+
     let newRow = document.createElement("tr");
-    newRow.innerHTML = `<td>${attempts}</td><td>${correctAnswer}</td><td>${
-      userAnswer || "No Answer"
-    } (${resultText})</td><td>${num1} ${operatorSpan.textContent} ${num2}</td>`;
+    newRow.innerHTML = `
+      <td>${attempts}</td>
+      <td>${correctAnswer}</td>
+      <td>${userAnswer || "No Answer"} (${resultText})</td>
+      <td>${num1} ${operatorSpan.textContent} ${num2}</td>
+    `;
     resultsTable.appendChild(newRow);
   };
 
+  const endGame = () => {
+    clearInterval(timer);
+    alert(`Game Over!\nFinal Score: ${score}\nErrors: ${errors}`);
+
+    // Show restart button
+    let restartButton = document.createElement("button");
+    restartButton.textContent = "New Game";
+    restartButton.style.position = "absolute";
+    restartButton.style.top = "50%";
+    restartButton.style.left = "50%";
+    restartButton.style.transform = "translate(-50%, -50%)";
+    restartButton.style.padding = "15px 25px";
+    restartButton.style.fontSize = "1.5rem";
+    restartButton.style.background = "#33ff33";
+    restartButton.style.color = "#000";
+    restartButton.style.border = "none";
+    restartButton.style.borderRadius = "8px";
+    restartButton.style.cursor = "pointer";
+    restartButton.onclick = () => location.reload();
+    document.body.appendChild(restartButton);
+  };
+
   checkButton.onclick = () => {
+    clearInterval(timer);
     let userAnswer = answerInput.value.trim();
-    if (!userAnswer.match(/^\d+$/)) {
-      alert("Invalid input! Please enter numbers only.");
+
+    if (!userAnswer.match(/^-?\d*\.?\d+$/)) {
+      alert("Please enter numbers only!");
       return;
     }
-    let isCorrect = parseInt(userAnswer) === correctAnswer;
-    addResult(parseInt(userAnswer), isCorrect);
-    answerInput.value = "";
+
+    let isCorrect = Math.abs(parseFloat(userAnswer) - correctAnswer) < 0.01;
+
+    if (isCorrect) {
+      addResult(parseFloat(userAnswer), true);
+      currentQuestion++;
+      questionNumberDisplay.textContent = `Question: ${currentQuestion}/10`;
+      generateQuestion();
+    } else {
+      handleWrongAnswer(parseFloat(userAnswer));
+    }
+  };
+
+  skipButton.onclick = () => {
+    addResult("Skipped", false);
     currentQuestion++;
     questionNumberDisplay.textContent = `Question: ${currentQuestion}/10`;
     generateQuestion();
   };
 
-  const restartGame = () => {
-    location.reload();
-  };
-
-  let restartButton = document.createElement("button");
-  restartButton.textContent = "New Game";
-  restartButton.style.position = "absolute";
-  restartButton.style.bottom = "20px";
-  restartButton.style.left = "50%";
-  restartButton.style.transform = "translateX(-50%)";
-  restartButton.style.padding = "10px 20px";
-  restartButton.style.fontSize = "1.5rem";
-  restartButton.style.background = "#33ff33";
-  restartButton.style.color = "#000";
-  restartButton.style.border = "none";
-  restartButton.style.borderRadius = "8px";
-  restartButton.style.cursor = "pointer";
-  restartButton.onclick = restartGame;
-  document.body.appendChild(restartButton);
+  answerInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      checkButton.click();
+    }
+  });
 
   operatorSelect.onchange = generateQuestion;
   rangeSelect.onchange = generateQuestion;
