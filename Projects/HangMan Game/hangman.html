@@ -8,52 +8,95 @@
   </head>
   <body>
     <div class="container">
-      <h1>Hangman Game</h1>
+      <!-- Game Header -->
+      <header>
+        <h1>Hangman Game</h1>
+        <div class="game-info">
+          <span>Score: <span id="score">0</span></span>
+          <span>Time: <span id="timer">60</span>s</span>
+        </div>
+      </header>
 
-      <!-- בחירת רמת קושי -->
-      <div id="difficulty">
-        <button onclick="setDifficulty('easy')">Easy</button>
-        <button onclick="setDifficulty('medium')">Medium</button>
-        <button onclick="setDifficulty('hard')">Hard</button>
+      <!-- Game Settings -->
+      <div class="game-settings">
+        <!-- Difficulty Buttons -->
+        <div class="difficulty-buttons">
+          <button onclick="changeLevel('easy')" class="btn easy">Easy</button>
+          <button onclick="changeLevel('medium')" class="btn medium">
+            Medium
+          </button>
+          <button onclick="changeLevel('hard')" class="btn hard">Hard</button>
+        </div>
+
+        <!-- Category Select -->
+        <div class="category-select">
+          <select onchange="changeCategory(this.value)">
+            <option value="animals">Animals</option>
+            <option value="countries">Countries</option>
+          </select>
+        </div>
       </div>
 
-      <!-- הזנת מילה מותאמת אישית -->
-      <div id="custom-word">
-        <input type="text" id="custom-word-input" placeholder="Enter a word" />
-        <input type="text" id="custom-hint-input" placeholder="Enter a hint" />
-        <button onclick="setCustomWord()">Start Custom Game</button>
+      <!-- Game Area -->
+      <div class="game-area">
+        <!-- Hangman Picture -->
+        <div class="hangman-box">
+          <img id="hangman-img" src="./IMG/hangman1.png" alt="Hangman" />
+        </div>
+
+        <!-- Word and Hint -->
+        <div class="word-area">
+          <div id="word-display"></div>
+          <div class="hint">Hint: <span id="hint-text"></span></div>
+        </div>
+
+        <!-- Keyboard -->
+        <div id="keyboard" class="keyboard"></div>
+
+        <!-- Game Status -->
+        <div class="game-status">
+          <p>Wrong Guesses: <span id="wrong-guesses">0</span>/7</p>
+          <button onclick="restartGame()" class="btn" id="restart-btn">
+            Restart
+          </button>
+        </div>
       </div>
 
-      <!-- טיימר וניקוד -->
-      <p id="timer">Time Left: 60s</p>
-      <p id="score">Score: 0</p>
-
-      <!-- רמז ומילה נסתרת -->
-      <p id="hint"><strong>Hint:</strong> ???</p>
-      <p id="word">_ _ _ _</p>
-
-      <!-- הודעות למשתמש -->
-      <p id="message"></p>
-
-      <!-- תמונת Hangman -->
-      <img
-        id="hangman-image"
-        src="img/hangman1.png"
-        alt="Hangman"
-        class="hangman-img"
-      />
-
-      <!-- כפתורי אותיות -->
-      <div id="letters"></div>
-
-      <!-- טעויות -->
-      <p>Wrong guesses: <span id="wrong-guesses">0</span>/7</p>
-
-      <!-- כפתורי התחלה מחדש ושמירת תוצאה -->
-      <button id="restart">Restart</button>
-      <button onclick="saveScore()">Save Score</button>
-      <button onclick="showHighScores()">Show High Scores</button>
+      <!-- High Scores Section -->
+      <div class="high-scores">
+        <div class="scores-header">
+          <h2>High Scores</h2>
+          <button onclick="resetHighScores()" class="btn reset-btn">
+            Reset Scores
+          </button>
+        </div>
+        <table class="scores-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="high-scores-list"></tbody>
+        </table>
+      </div>
     </div>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal">
+      <div class="modal-content">
+        <h2 id="game-over-title"></h2>
+        <p id="game-over-message"></p>
+        <p id="final-score"></p>
+        <input type="text" id="player-name" placeholder="Enter your name" />
+        <div class="modal-buttons">
+          <button onclick="saveScore()" class="btn">Save Score</button>
+          <button onclick="restartGame()" class="btn">Play Again</button>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
