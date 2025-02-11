@@ -1,10 +1,14 @@
 body {
   text-align: center;
   font-family: Arial, sans-serif;
-  background: #1e3c72; /* רקע כהה */
+  background: #1e3c72;
   color: white;
   margin: 0;
-  padding: 0;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h1 {
@@ -17,9 +21,50 @@ canvas {
   margin: 0 auto;
   background-color: #2a5298;
   border-radius: 10px;
+  max-width: 100%;
+  height: auto;
 }
 
 p {
   font-size: 20px;
   margin-top: 10px;
+}
+
+.controls {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.horizontal-controls {
+  display: flex;
+  gap: 20px;
+}
+
+button {
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  touch-action: manipulation;
+}
+
+button:active {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+@media (min-width: 768px) {
+  .controls {
+    display: none;
+  }
 }
