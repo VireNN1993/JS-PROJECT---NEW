@@ -86,7 +86,7 @@ function setupBackgroundImage() {
   const isGithubPages = window.location.hostname.includes("github.io");
   const backgroundPath = isGithubPages
     ? "/JS-PROJECT---NEW/Images/backGround.png"
-    : "Images/backGround.png";
+    : "Images/background.png";
 
   const heroSection = document.querySelector(".hero-section");
   if (heroSection) {
