@@ -82,17 +82,6 @@ function setupSmoothScroll() {
 /**
  * Setup dynamic background image path
  */
-function setupBackgroundImage() {
-  const isGithubPages = window.location.hostname.includes("github.io");
-  const backgroundPath = isGithubPages
-    ? "/JS-PROJECT---NEW/Images/backGround.png"
-    : "Images/backGround.png";
-
-  const heroSection = document.querySelector(".hero-section");
-  if (heroSection) {
-    heroSection.style.backgroundImage = `url('${backgroundPath}')`;
-  }
-}
 
 /**
  * Initialize GSAP animations
