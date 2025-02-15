@@ -131,7 +131,7 @@ function updateWord() {
 }
 
 function updatePicture() {
-  hangmanPic.src = `/IMG/hangman${mistakes + 1}.png`;
+  hangmanPic.src = `./IMG/hangman${mistakes + 1}.png`;
 }
 
 function updateUIElements() {
