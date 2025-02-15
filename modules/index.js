@@ -85,7 +85,7 @@ function setupSmoothScroll() {
 function setupBackgroundImage() {
   const isGithubPages = window.location.hostname.includes("github.io");
   const backgroundPath = isGithubPages
-    ? "/JS-PROJECT---NEW/Images/backGround.png"
+    ? "/JS-PROJECT---NEW/Images/background.png"
     : "Images/background.png";
 
   const heroSection = document.querySelector(".hero-section");
