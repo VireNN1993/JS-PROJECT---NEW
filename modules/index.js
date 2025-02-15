@@ -1,9 +1,3 @@
-/**
- * index.js - Main Application Entry Point
- * Full Stack Portfolio Project
- * Author: Natan Blochin
- */
-
 import { Navigation } from "./navigation.js";
 import { ProjectManager } from "./projectManager.js";
 import { FormManager } from "./formManager.js";
@@ -12,15 +6,10 @@ import { ScrollManager } from "./scrollManager.js";
 // Main initialization function
 document.addEventListener("DOMContentLoaded", () => {
   initializeCore();
-  setupBackgroundImage();
   initializeAnimations();
-  setupSmoothScroll();
   updateFooterYear();
 });
 
-/**
- * Initialize core application features
- */
 function initializeCore() {
   try {
     const navigation = new Navigation();
@@ -49,68 +38,73 @@ function initializeCore() {
   }
 }
 
-/**
- * Setup smooth scroll for Explore Projects button
- */
-function setupSmoothScroll() {
-  const exploreButton = document.getElementById("hero-button");
-
-  if (exploreButton) {
-    exploreButton.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      const projectsSection = document.getElementById("projects");
-
-      if (projectsSection) {
-        const startY = window.pageYOffset;
-        const endY =
-          projectsSection.getBoundingClientRect().top + window.pageYOffset;
-
-        gsap.to(window, {
-          duration: 2,
-          scrollTo: {
-            y: endY,
-            autoKill: false,
-          },
-          ease: "power2.inOut",
-        });
-      }
-    });
-  }
-}
-
-/**
- * Initialize GSAP animations
- */
 function initializeAnimations() {
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollToPlugin);
 
     const heroTitle = document.getElementById("hero-title");
     const heroSubtitle = document.getElementById("hero-subtitle");
     const heroButton = document.getElementById("hero-button");
 
     if (heroTitle && heroSubtitle && heroButton) {
-      gsap
-        .timeline()
-        .fromTo(
-          heroTitle,
-          { opacity: 0, y: -50 },
-          { opacity: 1, y: 0, duration: 1 }
-        )
-        .fromTo(
+      // Reset initial opacity
+      gsap.set([heroTitle, heroSubtitle, heroButton], {
+        opacity: 0,
+        y: 30,
+      });
+
+      // Create timeline for hero animations
+      const tl = gsap.timeline({
+        defaults: {
+          duration: 1,
+          ease: "power3.out",
+        },
+      });
+
+      // Add animations to timeline
+      tl.to(heroTitle, {
+        opacity: 1,
+        y: 0,
+        delay: 0.5,
+      })
+        .to(
           heroSubtitle,
-          { opacity: 0, y: -30 },
-          { opacity: 1, y: 0, duration: 0.8 }
+          {
+            opacity: 1,
+            y: 0,
+          },
+          "-=0.5"
         )
-        .fromTo(heroButton, { opacity: 0 }, { opacity: 1, duration: 0.5 });
+        .to(
+          heroButton,
+          {
+            opacity: 1,
+            y: 0,
+          },
+          "-=0.5"
+        );
+
+      // Setup smooth scroll for hero button
+      heroButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        const projectsSection = document.getElementById("projects");
+
+        if (projectsSection) {
+          gsap.to(window, {
+            duration: 2.5,
+            scrollTo: {
+              y: projectsSection.offsetTop,
+              autoKill: false,
+            },
+            ease: "power3.inOut",
+          });
+        }
+      });
     }
   }
 }
 
-/**
- * Update footer year
- */
 function updateFooterYear() {
   const yearElement = document.getElementById("year");
   if (yearElement) {
