@@ -80,10 +80,6 @@ function setupSmoothScroll() {
 }
 
 /**
- * Setup dynamic background image path
- */
-
-/**
  * Initialize GSAP animations
  */
 function initializeAnimations() {
