@@ -44,7 +44,7 @@ body {
 .hero-section {
   min-height: 100vh;
   position: relative;
-  background: url("/Images/background.png") center/cover no-repeat;
+  background: url("./Images/background.png") center/cover no-repeat;
 }
 
 .hero-content {
