@@ -2,46 +2,39 @@
  * projectManager.js - Project Gallery Management
  * Full Stack Portfolio Project
  * Author: Natan Blochin
+ *
+ * Manages project gallery functionality including:
+ * - Dynamic project card creation
+ * - Hover animations and effects
+ * - Modal interactions
+ * - Scroll-based animations
  */
 
 import { projects } from "./projectsData.js";
 
 export class ProjectManager {
   constructor() {
-    // Initialize GSAP plugins
     gsap.registerPlugin(ScrollTrigger);
-
-    // Bind methods
     this.handleWindowResize = this.handleWindowResize.bind(this);
     this.setupEventListeners();
   }
 
   setupEventListeners() {
-    // Add window resize handler
     window.addEventListener("resize", this.handleWindowResize);
   }
 
   handleWindowResize() {
-    // Refresh ScrollTrigger on window resize
     ScrollTrigger.refresh();
   }
 
-  /**
-   * Creates an interactive project card with animation and hover effects
-   * @param {Object} project - Project data object
-   * @param {number} index - Project index for stagger animations
-   * @returns {HTMLElement} Animated project card
-   */
   createProjectCard(project, index) {
     const card = document.createElement("div");
     card.className =
       "project-card bg-gray-800 p-6 rounded-xl shadow-lg transform transition-all duration-500";
     card.setAttribute("data-project-id", project.id);
 
-    // Card HTML structure
     card.innerHTML = `
             <div class="card-inner relative group overflow-hidden rounded-lg">
-                <!-- Project Image Container -->
                 <div class="image-container relative overflow-hidden rounded-lg">
                     <img 
                         src="${project.image}" 
@@ -60,7 +53,6 @@ export class ProjectManager {
                     </div>
                 </div>
 
-                <!-- Project Content -->
                 <div class="content-wrapper mt-4">
                     <h3 class="text-xl font-bold project-title">${
                       project.title
@@ -69,7 +61,6 @@ export class ProjectManager {
                       project.description
                     }</p>
                     
-                    <!-- Project Tags -->
                     <div class="tags-container mt-4 flex flex-wrap gap-2">
                         ${project.tags
                           .map(
@@ -84,13 +75,9 @@ export class ProjectManager {
             </div>
         `;
 
-    // Add hover animations
     this.addHoverEffects(card);
-
-    // Add click handler for modal
     card.addEventListener("click", () => this.openProjectModal(project));
 
-    // Initial entrance animation setup
     gsap.set(card, {
       opacity: 0,
       y: 50,
@@ -100,19 +87,13 @@ export class ProjectManager {
     return card;
   }
 
-  /**
-   * Adds hover animations to project card
-   * @param {HTMLElement} card - Project card element
-   */
   addHoverEffects(card) {
-    // Get card elements
     const image = card.querySelector("img");
     const overlay = card.querySelector(".overlay");
     const overlayContent = card.querySelector(".overlay div");
     const tags = card.querySelectorAll(".tag");
     const title = card.querySelector(".project-title");
 
-    // Create hover animation timeline
     const hoverTimeline = gsap.timeline({ paused: true });
 
     hoverTimeline
@@ -155,30 +136,16 @@ export class ProjectManager {
           duration: 0.3,
         },
         0
-      )
-      .to(
-        card,
-        {
-          boxShadow: "0 0 20px rgba(59, 130, 246, 0.5)",
-          duration: 0.5,
-        },
-        0
       );
 
-    // Add hover event listeners
     card.addEventListener("mouseenter", () => hoverTimeline.play());
     card.addEventListener("mouseleave", () => hoverTimeline.reverse());
   }
 
-  /**
-   * Opens project details modal
-   * @param {Object} project - Project data
-   */
   openProjectModal(project) {
     const modal = document.getElementById("projectModal");
     if (!modal) return;
 
-    // Get modal elements
     const modalImage = modal.querySelector("#modalImage");
     const modalTitle = modal.querySelector("#modalTitle");
     const modalDescription = modal.querySelector("#modalDescription");
@@ -186,42 +153,30 @@ export class ProjectManager {
     const previewButton = modal.querySelector("#previewButton");
     const downloadButton = modal.querySelector("#downloadButton");
 
-    // Update modal content
     modalImage.src = project.image;
     modalImage.alt = project.title;
     modalTitle.textContent = project.title;
     modalDescription.textContent = project.description;
-
-    // Update technologies
     modalTechnologies.innerHTML = project.technologies
       .map(
         (tech) => `
-                <span class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm">
-                    ${tech}
-                </span>
-            `
+            <span class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm">
+                ${tech}
+            </span>
+        `
       )
       .join("");
 
-    // Update buttons
     previewButton.href = project.link;
     downloadButton.href = project.download;
 
-    // Show modal with animation
     modal.style.display = "flex";
     setTimeout(() => modal.classList.add("show"), 10);
-
-    // Lock body scroll
     document.body.style.overflow = "hidden";
 
-    // Setup modal close handlers
     this.setupModalCloseHandlers(modal);
   }
 
-  /**
-   * Sets up modal close functionality
-   * @param {HTMLElement} modal - Modal element
-   */
   setupModalCloseHandlers(modal) {
     const closeButton = modal.querySelector(".close-button");
 
@@ -245,22 +200,16 @@ export class ProjectManager {
     });
   }
 
-  /**
-   * Renders all project cards with animations
-   */
   renderProjects() {
     const container = document.getElementById("projects-container");
     if (!container) return;
 
-    // Clear container
     container.innerHTML = "";
 
-    // Create and append cards
     projects.forEach((project, index) => {
       const card = this.createProjectCard(project, index);
       container.appendChild(card);
 
-      // Entrance animation with ScrollTrigger
       gsap.to(card, {
         scrollTrigger: {
           trigger: card,
@@ -274,16 +223,12 @@ export class ProjectManager {
         delay: index * 0.2,
         ease: "back.out(1.7)",
         onComplete: () => {
-          // Reset transform after animation for proper hover effects
           gsap.set(card, { clearProps: "transform" });
         },
       });
     });
   }
 
-  /**
-   * Cleanup method
-   */
   destroy() {
     window.removeEventListener("resize", this.handleWindowResize);
     ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
