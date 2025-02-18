@@ -87,6 +87,8 @@ body {
 .project-card {
   transition: var(--transition);
   cursor: pointer;
+  will-change: transform;
+  position: relative;
 }
 
 .project-card:hover {
@@ -100,6 +102,38 @@ body {
 .light-mode .project-card {
   background: white;
   box-shadow: var(--shadow);
+}
+
+/* Enhanced Project Card Animations */
+.project-card .overlay {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.project-card:hover .overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card img {
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover img {
+  transform: scale(1.1);
+}
+
+.project-card .tag {
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .tag {
+  transform: translateY(-2px);
+}
+
+.project-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Modal Styles */
@@ -214,21 +248,14 @@ textarea:focus {
 /* Back to Top Button */
 #backToTop {
   position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  bottom: 1.5rem;
   right: 1.5rem;
-  width: 40px;
-  height: 40px;
-  z-index: 50;
-  font-size: 20px;
-  cursor: pointer;
+  z-index: 30;
   background-color: var(--primary);
   color: white;
-  border: none;
-  border-radius: 50%;
-  transition: var(--transition);
+  border-radius: 9999px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
   transform: scale(0);
   opacity: 0;
 }
