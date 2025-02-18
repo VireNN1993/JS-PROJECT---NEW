@@ -1,15 +1,4 @@
-/**
- * projectManager.js - Project Gallery Management
- * Full Stack Portfolio Project
- * Author: Natan Blochin
- *
- * Manages project gallery functionality including:
- * - Dynamic project card creation
- * - Hover animations and effects
- * - Modal interactions
- * - Scroll-based animations
- */
-
+// Manages project gallery, cards and their animations
 import { projects } from "./projectsData.js";
 
 export class ProjectManager {
@@ -75,9 +64,11 @@ export class ProjectManager {
             </div>
         `;
 
+    // Add animations and interactivity
     this.addHoverEffects(card);
     card.addEventListener("click", () => this.openProjectModal(project));
 
+    // Set initial animation state
     gsap.set(card, {
       opacity: 0,
       y: 50,
@@ -88,12 +79,14 @@ export class ProjectManager {
   }
 
   addHoverEffects(card) {
+    // Get elements for animation
     const image = card.querySelector("img");
     const overlay = card.querySelector(".overlay");
     const overlayContent = card.querySelector(".overlay div");
     const tags = card.querySelectorAll(".tag");
     const title = card.querySelector(".project-title");
 
+    // Create hover animation timeline
     const hoverTimeline = gsap.timeline({ paused: true });
 
     hoverTimeline
@@ -138,6 +131,7 @@ export class ProjectManager {
         0
       );
 
+    // Add hover listeners
     card.addEventListener("mouseenter", () => hoverTimeline.play());
     card.addEventListener("mouseleave", () => hoverTimeline.reverse());
   }
@@ -146,6 +140,7 @@ export class ProjectManager {
     const modal = document.getElementById("projectModal");
     if (!modal) return;
 
+    // Get modal elements
     const modalImage = modal.querySelector("#modalImage");
     const modalTitle = modal.querySelector("#modalTitle");
     const modalDescription = modal.querySelector("#modalDescription");
@@ -153,10 +148,13 @@ export class ProjectManager {
     const previewButton = modal.querySelector("#previewButton");
     const downloadButton = modal.querySelector("#downloadButton");
 
+    // Update modal content
     modalImage.src = project.image;
     modalImage.alt = project.title;
     modalTitle.textContent = project.title;
     modalDescription.textContent = project.description;
+
+    // Add technology tags
     modalTechnologies.innerHTML = project.technologies
       .map(
         (tech) => `
@@ -167,9 +165,11 @@ export class ProjectManager {
       )
       .join("");
 
+    // Update buttons
     previewButton.href = project.link;
     downloadButton.href = project.download;
 
+    // Show modal
     modal.style.display = "flex";
     setTimeout(() => modal.classList.add("show"), 10);
     document.body.style.overflow = "hidden";
@@ -188,11 +188,11 @@ export class ProjectManager {
       }, 300);
     };
 
+    // Add close handlers
     closeButton.onclick = closeModal;
     modal.onclick = (e) => {
       if (e.target === modal) closeModal();
     };
-
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && modal.classList.contains("show")) {
         closeModal();
@@ -206,10 +206,12 @@ export class ProjectManager {
 
     container.innerHTML = "";
 
+    // Create and animate each project card
     projects.forEach((project, index) => {
       const card = this.createProjectCard(project, index);
       container.appendChild(card);
 
+      // Add entrance animation
       gsap.to(card, {
         scrollTrigger: {
           trigger: card,
@@ -230,6 +232,7 @@ export class ProjectManager {
   }
 
   destroy() {
+    // Clean up
     window.removeEventListener("resize", this.handleWindowResize);
     ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }

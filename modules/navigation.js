@@ -1,28 +1,9 @@
-/**
- * navigation.js - Navigation System Manager
- * Full Stack Portfolio Project
- * Author: Natan Blochin
- *
- * Manages site navigation including:
- * - Responsive navigation for desktop and mobile
- * - Theme toggling functionality
- * - Scroll behavior for navbar
- * - Mobile menu animations
- * Features:
- * - Responsive design
- * - Smooth transitions
- * - Theme switching
- * - Mobile-first approach
- */
-
+// Handles navigation system including mobile menu and theme switching
 import { toggleDarkMode } from "./themeManager.js";
 
 export class Navigation {
-  /**
-   * Initialize navigation system and bind DOM elements
-   */
   constructor() {
-    // Initialize DOM elements
+    // Get navigation elements
     this.mobileNav = document.getElementById("mobile-nav");
     this.mobileMenuBtn = document.getElementById("mobile-menu-btn");
     this.desktopThemeBtn = document.getElementById("theme-toggle");
@@ -30,15 +11,12 @@ export class Navigation {
     this.navbar = document.getElementById("navbar");
     this.isMenuOpen = false;
 
-    // Setup navigation system
+    // Initialize navigation
     this.initializeHamburgerMenu();
     this.setupEventListeners();
     this.setupScrollBehavior();
   }
 
-  /**
-   * Initialize hamburger menu icon and styles
-   */
   initializeHamburgerMenu() {
     const hamburgerIcon = this.mobileMenuBtn?.querySelector("svg");
     if (hamburgerIcon) {
@@ -50,28 +28,21 @@ export class Navigation {
     }
   }
 
-  /**
-   * Update hamburger menu styles based on theme
-   * @param {boolean} isDark - Current theme state
-   */
   updateHamburgerStyle(isDark) {
     const hamburgerIcon = this.mobileMenuBtn?.querySelector("svg");
     if (hamburgerIcon && this.mobileMenuBtn) {
-      // Reset existing styles
+      // Reset styles
       hamburgerIcon.style = "";
       this.mobileMenuBtn.style = "";
       this.mobileMenuBtn.className = "md:hidden p-2 rounded-lg";
 
-      // Apply theme-specific styles
+      // Apply theme styles
       hamburgerIcon.style.stroke = isDark ? "#FFFFFF" : "#1F2937";
       hamburgerIcon.style.strokeWidth = "2";
       hamburgerIcon.style.opacity = "1";
     }
   }
 
-  /**
-   * Setup all navigation event listeners
-   */
   setupEventListeners() {
     // Mobile menu toggle
     if (this.mobileMenuBtn) {
@@ -80,7 +51,7 @@ export class Navigation {
       );
     }
 
-    // Theme change observer
+    // Watch for theme changes
     const observer = new MutationObserver(() => {
       const isDark = document.body.classList.contains("dark-mode");
       this.updateHamburgerStyle(isDark);
@@ -91,7 +62,7 @@ export class Navigation {
       attributeFilter: ["class"],
     });
 
-    // Theme toggle buttons
+    // Theme buttons
     [this.desktopThemeBtn, this.mobileThemeBtn].forEach((btn) => {
       if (btn) {
         btn.addEventListener("click", () => {
@@ -111,10 +82,6 @@ export class Navigation {
     }
   }
 
-  /**
-   * Setup navbar scroll behavior
-   * Adds blur effect and opacity changes on scroll
-   */
   setupScrollBehavior() {
     window.addEventListener("scroll", () => {
       if (this.navbar) {
@@ -125,24 +92,17 @@ export class Navigation {
     });
   }
 
-  /**
-   * Toggle mobile menu state with animation
-   */
   toggleMobileMenu() {
     this.isMenuOpen = !this.isMenuOpen;
     if (this.mobileNav) {
       this.mobileNav.style.transform = this.isMenuOpen
         ? "translateY(0)"
         : "translateY(100%)";
-
       const isDark = document.body.classList.contains("dark-mode");
       this.updateHamburgerStyle(isDark);
     }
   }
 
-  /**
-   * Close mobile menu and reset state
-   */
   closeMobileMenu() {
     this.isMenuOpen = false;
     if (this.mobileNav) {

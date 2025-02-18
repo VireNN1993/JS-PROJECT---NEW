@@ -1,11 +1,4 @@
-/**
- * themeManager.js - Theme Management System
- * Full Stack Portfolio Project
- * Author: Natan Blochin
- *
- * Manages theme switching and UI updates across the application
- */
-
+// Manages theme switching between light and dark modes
 export function toggleDarkMode() {
   const body = document.body;
   const isDark = body.classList.contains("dark-mode");
@@ -21,10 +14,7 @@ export function toggleDarkMode() {
   updateThemeButtons(isDark);
 }
 
-/**
- * Update hamburger menu appearance based on theme
- * @param {boolean} isDark - Current theme state
- */
+// Update hamburger menu for current theme
 function updateHamburgerMenu(isDark) {
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");
   if (!mobileMenuBtn) return;
@@ -40,10 +30,7 @@ function updateHamburgerMenu(isDark) {
   }
 }
 
-/**
- * Update mobile navigation styling
- * @param {boolean} isDark - Current theme state
- */
+// Update mobile navigation styles
 function updateMobileNav(isDark) {
   const mobileNav = document.getElementById("mobile-nav");
   if (!mobileNav) return;
@@ -57,10 +44,7 @@ function updateMobileNav(isDark) {
   });
 }
 
-/**
- * Update main navigation bar styling
- * @param {boolean} isDark - Current theme state
- */
+// Update main navigation styles
 function updateNavbar(isDark) {
   const navbar = document.getElementById("navbar");
   if (!navbar) return;
@@ -75,10 +59,7 @@ function updateNavbar(isDark) {
   });
 }
 
-/**
- * Update section backgrounds and colors
- * @param {boolean} isDark - Current theme state
- */
+// Update section backgrounds and colors
 function updateSections(isDark) {
   document.querySelectorAll(".section").forEach((section) => {
     const isProjects = section.id === "projects";
@@ -95,12 +76,9 @@ function updateSections(isDark) {
   });
 }
 
-/**
- * Update text colors throughout the site
- * @param {boolean} isDark - Current theme state
- */
+// Update text colors across the site
 function updateTextColors(isDark) {
-  // Update regular text elements
+  // Regular text
   document
     .querySelectorAll("p, .text-gray-300, .text-gray-400")
     .forEach((el) => {
@@ -115,28 +93,25 @@ function updateTextColors(isDark) {
       }
     });
 
-  // Update headings
+  // Headings
   document.querySelectorAll("h2, h3").forEach((el) => {
     el.style.color = isDark ? "#111827" : "#FFFFFF";
   });
 
-  // Update education section text
+  // Education text
   document.querySelectorAll(".education-text").forEach((el) => {
     el.style.color = isDark ? "#4B5563" : "#FFFFFF";
   });
 
-  // Update social media icons
+  // Social icons
   document.querySelectorAll(".social-icons a").forEach((el) => {
     el.style.color = isDark ? "#4B5563" : "#D1D5DB";
   });
 }
 
-/**
- * Update theme toggle buttons appearance
- * @param {boolean} isDark - Current theme state
- */
+// Update theme toggle buttons
 function updateThemeButtons(isDark) {
-  // Update desktop theme button
+  // Desktop button
   const themeToggle = document.getElementById("theme-toggle");
   if (themeToggle) {
     themeToggle.textContent = isDark ? "🌙 Dark Mode" : "☀️ Light Mode";
@@ -145,7 +120,7 @@ function updateThemeButtons(isDark) {
     }`;
   }
 
-  // Update mobile theme button
+  // Mobile button
   const mobileThemeToggle = document.getElementById("mobile-theme-toggle");
   if (mobileThemeToggle) {
     const icon = mobileThemeToggle.querySelector("svg");

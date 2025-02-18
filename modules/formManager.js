@@ -1,28 +1,7 @@
-/**
- * formManager.js - Contact Form Management
- * Full Stack Portfolio Project
- * Author: Natan Blochin
- *
- * Manages contact form functionality including:
- * - Form validation
- * - Real-time input formatting
- * - User feedback
- * - Error handling
- *
- * Technologies used:
- * - JavaScript ES6+
- * - DOM Events
- * - Regular Expressions
- * - Form Validation
- */
-
+// Handles form validation, submission and notifications
 import { NOTIFICATION_DURATION } from "./constants.js";
 
 export class FormManager {
-  /**
-   * Initialize form manager and bind DOM elements
-   * Sets up event handlers when DOM is ready
-   */
   constructor() {
     document.addEventListener("DOMContentLoaded", () => {
       this.form = document.querySelector("form");
@@ -31,19 +10,15 @@ export class FormManager {
     });
   }
 
-  /**
-   * Set up form elements and event listeners
-   * Initializes validation and input formatting
-   */
   initializeForm() {
-    // Bind form elements
+    // Get form elements
     this.nameInput = this.form.querySelector('input[type="text"]');
     this.emailInput = this.form.querySelector('input[type="email"]');
     this.phoneInput = this.form.querySelector('input[type="tel"]');
     this.messageInput = this.form.querySelector("textarea");
     this.submitButton = this.form.querySelector('button[type="submit"]');
 
-    // Set up event listeners
+    // Add event listeners
     this.form.addEventListener("submit", (e) => this.handleSubmit(e));
     if (this.phoneInput) {
       this.phoneInput.addEventListener("input", (e) =>
@@ -52,11 +27,6 @@ export class FormManager {
     }
   }
 
-  /**
-   * Handle phone number input formatting
-   * Supports multiple phone number formats
-   * @param {Event} e - Input event
-   */
   formatPhoneNumber(e) {
     let value = e.target.value;
     value = value.replace(/[^\d+]/g, "");
@@ -68,22 +38,11 @@ export class FormManager {
     e.target.value = value.slice(0, value.startsWith("+") ? 16 : 15);
   }
 
-  /**
-   * Validate email format using regex
-   * @param {string} email - Email to validate
-   * @returns {boolean} Validation result
-   */
   validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
-  /**
-   * Validate phone number format
-   * Supports international and local formats
-   * @param {string} phone - Phone number to validate
-   * @returns {boolean} Validation result
-   */
   validatePhone(phone) {
     const phoneClean = phone.replace(/\s+/g, "");
     if (!phoneClean) return false;
@@ -94,18 +53,13 @@ export class FormManager {
     return /^\d{7,15}$/.test(phoneClean);
   }
 
-  /**
-   * Display notification message to user
-   * @param {string} message - Message to display
-   * @param {string} type - Message type (success/error)
-   */
   showNotification(message, type = "error") {
-    // Remove existing notifications
+    // Remove any existing notifications
     document
       .querySelectorAll(".notification-message")
       .forEach((n) => n.remove());
 
-    // Create notification element
+    // Create new notification
     const notification = document.createElement("div");
     notification.className = `
             notification-message
@@ -118,7 +72,7 @@ export class FormManager {
         `;
     notification.textContent = message;
 
-    // Show and auto-remove notification
+    // Add and remove notification after delay
     document.body.appendChild(notification);
     setTimeout(() => {
       notification.classList.add("opacity-0");
@@ -126,15 +80,11 @@ export class FormManager {
     }, NOTIFICATION_DURATION);
   }
 
-  /**
-   * Validate all form fields
-   * @returns {boolean} Overall form validity
-   */
   validateForm() {
     let isValid = true;
     const errors = [];
 
-    // Validate each field
+    // Check all fields
     if (!this.nameInput.value.trim()) {
       errors.push("Please enter your name");
       isValid = false;
@@ -155,7 +105,7 @@ export class FormManager {
       isValid = false;
     }
 
-    // Show first error if validation fails
+    // Show first error if any
     if (!isValid) {
       this.showNotification(errors[0], "error");
     }
@@ -163,21 +113,15 @@ export class FormManager {
     return isValid;
   }
 
-  /**
-   * Handle form submission
-   * Prevents default submission and validates input
-   * @param {Event} e - Submit event
-   */
   handleSubmit(e) {
     e.preventDefault();
 
     if (this.validateForm()) {
-      // Form is valid - show success message
       this.showNotification("Message sent successfully!", "success");
       this.form.reset();
     }
   }
 }
 
-// Initialize form manager
+// Start form manager
 new FormManager();
