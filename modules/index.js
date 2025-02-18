@@ -1,3 +1,4 @@
+// Main entry point - initializes all application components
 import { Navigation } from "./navigation.js";
 import { ProjectManager } from "./projectManager.js";
 import { FormManager } from "./formManager.js";
