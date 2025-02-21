@@ -63,4 +63,15 @@ export const projects = [
     tags: ["API", "Countries", "Database"],
     technologies: ["HTML5", "CSS3", "JavaScript", "REST API"],
   },
+  {
+    id: 7,
+    title: "Tic-Tac-Toe Game",
+    image: "Images/tic-tac-toe.png",
+    description:
+      "A classic Tic-Tac-Toe game with three difficulty levels and score tracking.",
+    link: "Projects/Tic-Tac-Toe/tic-tac-toe.html",
+    download: "./Downloads/Tic-Tac-Toe.rar",
+    tags: ["Game", "AI", "Minimax"],
+    technologies: ["HTML5", "CSS3", "JavaScript"],
+  },
 ];
