@@ -62,11 +62,11 @@ h1 {
 }
 
 .cell.X {
-  color: #4a90e2; /* צבע כחול ל-X */
+  color: #4a90e2;
 }
 
 .cell.O {
-  color: #e94e77; /* צבע ורוד ל-O */
+  color: #e94e77;
 }
 
 .controls {
@@ -117,7 +117,6 @@ button:hover {
   color: #ffdd57;
 }
 
-/* אנימציה לניצחון */
 @keyframes winAnimation {
   0% {
     transform: scale(1);
@@ -135,8 +134,15 @@ button:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Responsive design for mobile and tablets */
 @media (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  #turn-display {
+    font-size: 1.2rem;
+  }
+
   .board {
     grid-template-columns: repeat(3, 80px);
     grid-template-rows: repeat(3, 80px);
@@ -148,11 +154,52 @@ button:hover {
     font-size: 2rem;
   }
 
+  select,
+  button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  #status {
+    font-size: 1rem;
+  }
+
+  .scoreboard {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
   h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   #turn-display {
-    font-size: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .board {
+    grid-template-columns: repeat(3, 70px);
+    grid-template-rows: repeat(3, 70px);
+  }
+
+  .cell {
+    width: 70px;
+    height: 70px;
+    font-size: 1.8rem;
+  }
+
+  select,
+  button {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  #status {
+    font-size: 0.9rem;
+  }
+
+  .scoreboard {
+    font-size: 0.9rem;
   }
 }
