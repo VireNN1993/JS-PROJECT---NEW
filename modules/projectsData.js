@@ -80,7 +80,7 @@ export const projects = [
     image: "Images/code-master.png",
     description:
       "A programming quiz game based on 'Who Wants to Be a Millionaire' with 15 progressive JavaScript questions and lifelines.",
-    link: "Projects/Code-Master/code-master.html",
+    link: "Projects/code-master/code-master.html",
     download: "./Downloads/Code-Master.rar",
     tags: ["Game", "Quiz", "Educational"],
     technologies: ["HTML5", "CSS3", "JavaScript"],
