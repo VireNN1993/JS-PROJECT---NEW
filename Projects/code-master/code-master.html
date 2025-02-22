@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Master: The Millionaire Challenge</title>
+    <link rel="stylesheet" href="code-master.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <h1>Code Master: The Millionaire Challenge</h1>
+      <div class="subtitle">Test Your Programming Knowledge!</div>
+
+      <!-- Main game section -->
+      <div class="game-section">
+        <div class="score-display">Prize Money: <span id="score">$0</span></div>
+        <div class="timer-display">Time Left: <span id="timer">30</span>s</div>
+
+        <div class="question-container">
+          <p id="question-number"></p>
+          <p id="question"></p>
+          <div class="options">
+            <button id="option1"></button>
+            <button id="option2"></button>
+            <button id="option3"></button>
+            <button id="option4"></button>
+          </div>
+        </div>
+
+        <div class="lifelines">
+          <button id="audience-help">👥 Ask Dev Community</button>
+          <button id="phone-friend">📞 Call Senior Dev</button>
+          <button id="fifty-fifty">50:50</button>
+        </div>
+
+        <div class="controls">
+          <button id="start">Start Challenge</button>
+          <button id="reset">Reset</button>
+        </div>
+
+        <p id="status"></p>
+      </div>
+
+      <!-- Results board section -->
+      <div class="results-board">
+        <h2>Progress Board</h2>
+        <ul id="results-list"></ul>
+      </div>
+    </div>
+    <script src="code-master.js"></script>
+  </body>
+</html>
