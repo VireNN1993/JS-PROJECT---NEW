@@ -1,0 +1,251 @@
+/* Variables */
+:root {
+  --primary-bg: #1a1e2e;
+  --primary-color: #6366f1;
+  --secondary-color: #4f46e5;
+  --text-color: #ffffff;
+  --card-bg: #283593;
+  --success-color: #10b981;
+}
+
+/* Base styles */
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, var(--primary-bg), #2d3449);
+  color: var(--text-color);
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Buttons */
+button {
+  padding: 12px 24px;
+  font-size: 18px;
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border: none;
+  border-radius: 12px;
+  color: var(--text-color);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Difficulty selector */
+#difficulty {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  margin: 20px 0;
+  display: flex;
+  gap: 15px;
+}
+
+/* Score display */
+#score {
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px 30px;
+  border-radius: 12px;
+  margin: 20px 0;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#timer,
+#matches,
+#best-time {
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 24px;
+}
+
+/* Game board */
+#board {
+  display: grid;
+  gap: 12px;
+  justify-content: center;
+  align-content: center;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+}
+
+/* Cards */
+.card {
+  position: relative;
+  width: 100px;
+  height: 150px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
+  border-radius: 12px;
+}
+
+.card:hover:not(.matched) {
+  transform: scale(1.02);
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card-front {
+  transform: rotateY(180deg);
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-back {
+  background: linear-gradient(45deg, var(--card-bg), #1a237e);
+  padding: 8px;
+  box-sizing: border-box;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Win Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #2d3449, #1a1e2e);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 400px;
+  width: 90%;
+}
+
+.modal h2 {
+  color: var(--primary-color);
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.modal p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  #difficulty {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .card {
+    width: 80px;
+    height: 120px;
+  }
+
+  #score {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+
+  #timer,
+  #matches,
+  #best-time {
+    font-size: 20px;
+  }
+
+  #board {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  .modal h2 {
+    font-size: 24px;
+  }
+
+  .modal p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 70px;
+    height: 105px;
+  }
+
+  #score {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .modal-content {
+    padding: 15px;
+  }
+}

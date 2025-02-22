@@ -85,4 +85,15 @@ export const projects = [
     tags: ["Game", "Quiz", "Educational"],
     technologies: ["HTML5", "CSS3", "JavaScript"],
   },
+  {
+    id: 9,
+    title: "Memory Card Game",
+    image: "Images/memory-card-game.png",
+    description:
+      "A fun and challenging memory card game where players match pairs of cards. Features multiple difficulty levels, a timer, and a high score system.",
+    link: "Projects/Memory Game/index.html",
+    download: "./Downloads/Memory-Card-Game.rar",
+    tags: ["Game", "Memory", "Educational"],
+    technologies: ["HTML5", "CSS3", "JavaScript"],
+  },
 ];

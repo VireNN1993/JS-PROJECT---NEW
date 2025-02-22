@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory Card Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <button id="start-btn">Start New Game</button>
+
+    <div id="difficulty" style="display: none">
+      <button class="level-btn" data-size="2">Easy (2x2)</button>
+      <button class="level-btn" data-size="4">Medium (4x4)</button>
+      <button class="level-btn" data-size="6">Hard (6x6)</button>
+    </div>
+
+    <div id="score">
+      Time: <span id="timer">0</span> seconds | Matches:
+      <span id="matches">0</span> | Best: <span id="best-time">-</span>
+    </div>
+
+    <div id="board" class="game-board"></div>
+
+    <button id="res" class="res" style="display: none">Restart Game</button>
+
+    <div id="win-modal" class="modal" style="display: none">
+      <div class="modal-content">
+        <h2>🎉 Congratulations! 🎉</h2>
+        <p>Time: <span id="final-time">0</span> seconds</p>
+        <p>New High Score: <span id="new-record"></span></p>
+        <button id="play-again">Play Again</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
