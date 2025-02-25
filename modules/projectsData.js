@@ -81,7 +81,7 @@ export const projects = [
     description:
       "A programming quiz game based on 'Who Wants to Be a Millionaire' with 15 progressive JavaScript questions and lifelines.",
     link: "Projects/code-master/code-master.html",
-    download: "./Downloads/Code-Master.rar",
+    download: "./Downloads/code-master.rar",
     tags: ["Game", "Quiz", "Educational"],
     technologies: ["HTML5", "CSS3", "JavaScript"],
   },
@@ -92,7 +92,7 @@ export const projects = [
     description:
       "A fun and challenging memory card game where players match pairs of cards. Features multiple difficulty levels, a timer, and a high score system.",
     link: "Projects/Memory Game/index.html",
-    download: "./Downloads/Memory-Card-Game.rar",
+    download: "./Downloads/Memory Game.rar",
     tags: ["Game", "Memory", "Educational"],
     technologies: ["HTML5", "CSS3", "JavaScript"],
   },
