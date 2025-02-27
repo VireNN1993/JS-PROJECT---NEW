@@ -37,7 +37,6 @@
 │   ├── projectsData.js    # נתוני הפרויקטים
 │   └── constants.js       # קבועים
 ├── Images/                # תיקיית תמונות
-├── Documents/             # מסמכים להורדה (קו"ח)
 └── Projects/              # תיקיית פרויקטים
     ├── math-challenge/    # משחק מתמטיקה
     ├── HangMan Game/      # משחק איש תלוי
