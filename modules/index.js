@@ -6,6 +6,16 @@ import { ScrollManager } from "./scrollManager.js";
 
 // Main initialization function
 document.addEventListener("DOMContentLoaded", () => {
+  // Register GSAP plugins first
+  if (window.gsap) {
+    if (window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+    if (window.ScrollToPlugin) {
+      gsap.registerPlugin(ScrollToPlugin);
+    }
+  }
+
   initializeCore();
   initializeAnimations();
   updateFooterYear();
@@ -40,10 +50,7 @@ function initializeCore() {
 }
 
 function initializeAnimations() {
-  if (window.gsap && window.ScrollTrigger) {
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.registerPlugin(ScrollToPlugin);
-
+  if (window.gsap) {
     const heroTitle = document.getElementById("hero-title");
     const heroSubtitle = document.getElementById("hero-subtitle");
     const heroButton = document.getElementById("hero-button");

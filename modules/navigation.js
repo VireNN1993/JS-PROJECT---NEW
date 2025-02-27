@@ -15,6 +15,7 @@ export class Navigation {
     this.initializeHamburgerMenu();
     this.setupEventListeners();
     this.setupScrollBehavior();
+    this.setupSmoothScrolling();
   }
 
   initializeHamburgerMenu() {
@@ -74,10 +75,15 @@ export class Navigation {
       }
     });
 
-    // Mobile navigation links
+    // Mobile navigation links - Only handle closing the menu here
+    // Smooth scrolling is handled in setupSmoothScrolling
     if (this.mobileNav) {
       this.mobileNav.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => this.closeMobileMenu());
+        link.addEventListener("click", (e) => {
+          // We'll handle smooth scrolling separately
+          // Just close the mobile menu
+          setTimeout(() => this.closeMobileMenu(), 300);
+        });
       });
     }
   }
@@ -90,6 +96,54 @@ export class Navigation {
         this.navbar.classList.toggle("backdrop-blur", shouldAddBlur);
       }
     });
+  }
+
+  setupSmoothScrolling() {
+    if (window.gsap && window.ScrollToPlugin) {
+      // Get all links in both desktop and mobile navigation
+      const allNavLinks = document.querySelectorAll("nav a, #mobile-nav a");
+
+      allNavLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          const targetId = link.getAttribute("href");
+
+          // For home links or brand/logo links
+          if (targetId === "#" || targetId === "") {
+            e.preventDefault();
+
+            // Scroll to top for home links
+            gsap.to(window, {
+              duration: 2,
+              scrollTo: {
+                y: 0,
+                autoKill: false,
+              },
+              ease: "power3.inOut",
+            });
+          }
+          // For section links
+          else if (targetId.startsWith("#")) {
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+              e.preventDefault();
+
+              // Small delay to allow mobile menu to start closing if needed
+              setTimeout(() => {
+                // Smooth scroll to the target section
+                gsap.to(window, {
+                  duration: 2,
+                  scrollTo: {
+                    y: targetSection.offsetTop,
+                    autoKill: false,
+                  },
+                  ease: "power3.inOut",
+                });
+              }, 100);
+            }
+          }
+        });
+      });
+    }
   }
 
   toggleMobileMenu() {
