@@ -1,4 +1,3 @@
-// Main entry point - initializes all application components
 import { Navigation } from "./navigation.js";
 import { ProjectManager } from "./projectManager.js";
 import { FormManager } from "./formManager.js";
@@ -6,7 +5,6 @@ import { ScrollManager } from "./scrollManager.js";
 
 // Main initialization function
 document.addEventListener("DOMContentLoaded", () => {
-  // Register GSAP plugins first
   if (window.gsap) {
     if (window.ScrollTrigger) {
       gsap.registerPlugin(ScrollTrigger);

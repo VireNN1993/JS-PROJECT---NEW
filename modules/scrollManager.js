@@ -1,7 +1,6 @@
-// Manages scroll behavior and back-to-top button functionality
 export class ScrollManager {
   constructor() {
-    this.scrollThreshold = 300; // Show button after 300px scroll
+    this.scrollThreshold = 300;
     this.backToTopButton = document.getElementById("backToTop");
 
     this.setupScrollListener();

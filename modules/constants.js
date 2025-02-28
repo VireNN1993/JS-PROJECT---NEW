@@ -1,5 +1,3 @@
-// Configuration values used across the application
-
 // Default animation settings for GSAP
 export const ANIMATION_DEFAULTS = {
   ease: "power3.out",

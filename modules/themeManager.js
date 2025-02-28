@@ -1,4 +1,3 @@
-// Manages theme switching between light and dark modes
 export function toggleDarkMode() {
   const body = document.body;
   const isDark = body.classList.contains("dark-mode");

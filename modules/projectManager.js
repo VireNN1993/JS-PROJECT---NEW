@@ -1,4 +1,3 @@
-// Manages project gallery, cards and their animations
 import { projects } from "./projectsData.js";
 
 export class ProjectManager {
@@ -79,7 +78,6 @@ export class ProjectManager {
   }
 
   addHoverEffects(card) {
-    // Get elements for animation
     const image = card.querySelector("img");
     const overlay = card.querySelector(".overlay");
     const overlayContent = card.querySelector(".overlay div");
@@ -140,7 +138,6 @@ export class ProjectManager {
     const modal = document.getElementById("projectModal");
     if (!modal) return;
 
-    // Get modal elements
     const modalImage = modal.querySelector("#modalImage");
     const modalTitle = modal.querySelector("#modalTitle");
     const modalDescription = modal.querySelector("#modalDescription");
@@ -232,7 +229,6 @@ export class ProjectManager {
   }
 
   destroy() {
-    // Clean up
     window.removeEventListener("resize", this.handleWindowResize);
     ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }

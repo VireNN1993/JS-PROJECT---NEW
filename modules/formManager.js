@@ -1,4 +1,3 @@
-// Handles form validation, submission and notifications
 import { NOTIFICATION_DURATION } from "./constants.js";
 
 export class FormManager {
@@ -11,14 +10,12 @@ export class FormManager {
   }
 
   initializeForm() {
-    // Get form elements
     this.nameInput = this.form.querySelector('input[type="text"]');
     this.emailInput = this.form.querySelector('input[type="email"]');
     this.phoneInput = this.form.querySelector('input[type="tel"]');
     this.messageInput = this.form.querySelector("textarea");
     this.submitButton = this.form.querySelector('button[type="submit"]');
 
-    // Add event listeners
     this.form.addEventListener("submit", (e) => this.handleSubmit(e));
     if (this.phoneInput) {
       this.phoneInput.addEventListener("input", (e) =>
@@ -123,5 +120,4 @@ export class FormManager {
   }
 }
 
-// Start form manager
 new FormManager();
